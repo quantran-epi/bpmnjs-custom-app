@@ -31,7 +31,7 @@ export const DynamicCreateProperties: FunctionComponent<IDynamicCreateProperties
             value: "",
             valueType: PropertyType.Text
         }
-        _setProperties([..._properties, newProperty]);
+        // _setProperties([..._properties, newProperty]);
         _saveProperty(newProperty);
     }
 
@@ -49,7 +49,7 @@ export const DynamicCreateProperties: FunctionComponent<IDynamicCreateProperties
 
     const _renderProperty = (prop: IProperty): React.ReactNode => {
         switch (prop.valueType) {
-            case PropertyType.Text: return <TextProperty data={prop} onSave={_updateProperty} onRemove={_removeProperty} />
+            case PropertyType.Text: return <TextProperty key={prop.id} data={prop} onSave={_updateProperty} onRemove={_removeProperty} />
             default: return;
         }
     }
@@ -67,7 +67,7 @@ export const DynamicCreateProperties: FunctionComponent<IDynamicCreateProperties
                     </div>
                 </Col>
             </Row>
-            {_properties.map(_renderProperty)}
+            {_properties.length > 0 ? _properties.map(_renderProperty) : "No properties found."}
         </Accordion.Body>
     </Accordion.Item>
 }
