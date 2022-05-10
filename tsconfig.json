@@ -20,6 +20,9 @@
             ],
             "@constants": [
                 "./app/constants"
+            ],
+            "@hooks/*": [
+                "./app/hooks/*"
             ]
         }
     }

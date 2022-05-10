@@ -65,6 +65,7 @@ module.exports = {
       "@config": path.resolve(__dirname, './app/config'),
       "@models": path.resolve(__dirname, './app/models'),
       "@constants": path.resolve(__dirname, './app/constants'),
+      "@hooks": path.resolve(__dirname, './app/hooks'),
     },
   },
 };

@@ -1,11 +1,12 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
-import { Button, Card, Form, FormControl, InputGroup, Modal, Stack } from 'react-bootstrap';
 import { IProperty } from '@models/Property';
+import { useHandleProperty } from '@hooks/useHandleProperty';
+import React, { FunctionComponent, useEffect, useState } from 'react';
+import { Button, Form, InputGroup, Modal, Stack } from 'react-bootstrap';
 import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
 import { TextInput } from '../../../../Form/Input/';
 
 interface ITextPropertyProps {
-    data: IProperty;
+    data: IProperty<string>;
     onSave?: (data: IProperty) => void;
     onRemove?: (id: string) => void;
     readonly?: boolean;
@@ -17,47 +18,15 @@ export const TextProperty: FunctionComponent<ITextPropertyProps> = ({
     onRemove,
     readonly = false
 }) => {
-    const [_data, _setData] = useState<IProperty>(data);
     const [_editingKey, _setEditingKey] = useState<boolean>(false);
-    const [_valueTextBoxDirty, _setValueTextBoxDirty] = useState<boolean>(false);
-
-    useEffect(() => {
-        _setData(data);
-    }, [data])
-
-    const _onChangeKey = (value: string) => {
-        let newData: IProperty = {
-            ..._data,
-            key: value
-        };
-        _setData(newData);
-        _onSave(newData);
-    }
-
-    const _onChangeValue = (value: string) => {
-        _setValueTextBoxDirty(true);
-        _setData({
-            ..._data,
-            value: value
-        })
-    }
-
-    const _onSave = (data: IProperty) => {
-        _setValueTextBoxDirty(false);
-        onSave(data);
-    }
-
-    const _onRemove = () => {
-        if (confirm('Are you sure to remove this property?'))
-            onRemove(_data.id);
-    }
+    const { data: _data, valueDirty, setKey, setValue, remove, save } = useHandleProperty({ data, onRemove, onSave });
 
     const _onValueTextBoxBlur = () => {
-        if (_valueTextBoxDirty) _onSave(_data);
+        if (valueDirty) save();
     }
 
     const _onValueTextBoxEnter = () => {
-        if (_valueTextBoxDirty) _onSave(_data);
+        if (valueDirty) save();
     }
 
     const _showEditKeyModal = () => {
@@ -76,7 +45,7 @@ export const TextProperty: FunctionComponent<ITextPropertyProps> = ({
                     <FaPencilAlt color="blue" onClick={_showEditKeyModal} />
                 </div>
                 <div className="ms-auto">
-                    <FaTrashAlt color="red" onClick={_onRemove} />
+                    <FaTrashAlt color="red" onClick={remove} />
                 </div>
             </Stack>
             <TextInput
@@ -84,12 +53,12 @@ export const TextProperty: FunctionComponent<ITextPropertyProps> = ({
                 placeholder="Enter value"
                 aria-label="Enter value"
                 value={_data.value}
-                onChangeText={_onChangeValue}
+                onChangeText={setValue}
                 onBlur={_onValueTextBoxBlur}
                 onEnter={_onValueTextBoxEnter}
                 readOnly={readonly} />
         </Form.Group>
-        <TextPropertyEditKeyModal value={_data.key} show={_editingKey} onHide={_hideEditKeyModal} onSave={_onChangeKey} />
+        <TextPropertyEditKeyModal value={_data.key} show={_editingKey} onHide={_hideEditKeyModal} onSave={setKey} />
     </React.Fragment>
 }
 
@@ -125,6 +94,7 @@ const TextPropertyEditKeyModal: FunctionComponent<ITextPropertyEditKeyModalProps
             <InputGroup className="mb-3">
                 <InputGroup.Text id="basic-addon1">Key</InputGroup.Text>
                 <TextInput
+                    autoFocus
                     placeholder="Enter key"
                     aria-label="Enter key"
                     aria-describedby="basic-addon1"

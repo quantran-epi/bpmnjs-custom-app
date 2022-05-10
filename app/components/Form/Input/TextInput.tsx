@@ -5,6 +5,7 @@ interface ITextInputProps extends Omit<FormControlProps, "onChange" | "onBlur"> 
     onChangeText?: (value: string) => void;
     onBlur?: () => void;
     onEnter?: () => void;
+    autoFocus?: boolean;
 }
 
 export const TextInput: FunctionComponent<ITextInputProps> = ({
