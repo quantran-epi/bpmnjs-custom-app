@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+        "outDir": "./dist/",
+        "noImplicitAny": false,
+        "module": "es6",
+        "target": "es5",
+        "jsx": "react",
+        "allowJs": true,
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
+        "strict": false,
+        "resolveJsonModule": true,
+        "baseUrl": ".",
+        "paths": {
+            "@config/*": [
+                "./app/config/*"
+            ],
+            "@models/*": [
+                "./app/models/*"
+            ],
+            "@constants": [
+                "./app/constants"
+            ]
+        }
+    }
+}

@@ -1,0 +1,19 @@
+{
+    "name": "QualityAssurance",
+    "uri": "http://some-company/schema/bpmn/qa",
+    "prefix": "custom",
+    "xml": {
+        "tagAlias": "lowerCase"
+    },
+    "types": [
+        {
+            "name": "RestApi",
+            "superClass": [
+                "bpmn:FlowNode",
+                "bpmn:InteractionNode"
+            ]
+        }
+    ],
+    "emumerations": [],
+    "associations": []
+}

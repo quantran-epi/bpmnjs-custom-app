@@ -1,0 +1,9 @@
+{
+    "basic": {
+        "textInput": {
+            "name": {
+                "prefix": "textInput"
+            }
+        }
+    }
+}
