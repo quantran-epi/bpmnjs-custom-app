@@ -26,6 +26,7 @@ export const DynamicCreateProperties: FunctionComponent<IDynamicCreateProperties
 
     const _onAddTextProperty = () => {
         let newProperty: IProperty = {
+            id: template.basic.textInput.name.prefix.concat("_").concat(nanoid()),
             key: template.basic.textInput.name.prefix.concat("_").concat(nanoid(10)),
             value: "",
             valueType: PropertyType.Text
@@ -39,11 +40,11 @@ export const DynamicCreateProperties: FunctionComponent<IDynamicCreateProperties
     }
 
     const _updateProperty = (data: IProperty) => {
-        dispatch(updateProperty({ nodeId: node.id, propertyId: data.key, property: data }));
+        dispatch(updateProperty({ nodeId: node.id, propertyId: data.id, property: data }));
     }
 
-    const _removeProperty = (key: string) => {
-        dispatch(removeProperties({ nodeId: node.id, propertyIds: [key] }))
+    const _removeProperty = (id: string) => {
+        dispatch(removeProperties({ nodeId: node.id, propertyIds: [id] }))
     }
 
     const _renderProperty = (prop: IProperty): React.ReactNode => {
@@ -57,7 +58,7 @@ export const DynamicCreateProperties: FunctionComponent<IDynamicCreateProperties
         <Accordion.Header>Additional Properties</Accordion.Header>
         <Accordion.Body>
             <Row>
-                <Col md={{ span: 6, offset: 6 }}>
+                <Col>
                     <div style={{ display: "flex", justifyContent: "flex-start" }}>
                         <DropdownButton as={ButtonGroup} title="Add Property" id="bg-nested-dropdown">
                             <Dropdown.Item eventKey="1" onClick={_onAddTextProperty}>Text</Dropdown.Item>

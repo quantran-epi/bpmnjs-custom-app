@@ -54,12 +54,12 @@ export const PropertiesPanelSlice = createSlice({
         removeProperties: (state, action: PayloadAction<{ nodeId: string, propertyIds: string[] }>) => {
             let node = state.nodes.find(node => node.id === action.payload.nodeId);
             if (!node) return;
-            node.properties = node.properties.filter(prop => !action.payload.propertyIds.includes(prop.key));
+            node.properties = node.properties.filter(prop => !action.payload.propertyIds.includes(prop.id));
         },
         updateProperty: (state, action: PayloadAction<{ nodeId: string, propertyId: string, property: IProperty }>) => {
             let node = state.nodes.find(node => node.id === action.payload.nodeId);
             if (!node) return;
-            let property = node.properties.find(prop => prop.key === action.payload.propertyId);
+            let property = node.properties.find(prop => prop.id === action.payload.propertyId);
             if (!property) return;
             property.key = action.payload.property.key;
             property.value = action.payload.property.value;

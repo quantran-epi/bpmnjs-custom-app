@@ -7,7 +7,7 @@ import { TextInput } from '../../../../Form/Input/';
 interface ITextPropertyProps {
     data: IProperty;
     onSave?: (data: IProperty) => void;
-    onRemove?: (key: string) => void;
+    onRemove?: (id: string) => void;
     readonly?: boolean;
 }
 
@@ -49,7 +49,7 @@ export const TextProperty: FunctionComponent<ITextPropertyProps> = ({
 
     const _onRemove = () => {
         if (confirm('Are you sure to remove this property?'))
-            onRemove(_data.key);
+            onRemove(_data.id);
     }
 
     const _onValueTextBoxBlur = () => {
