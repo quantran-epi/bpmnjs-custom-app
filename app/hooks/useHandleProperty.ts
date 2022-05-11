@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 interface IUseHandleProperty<T = any> {
     valueDirty: boolean;
+    keyDirty: boolean;
     data: T;
     setKey: (value: string) => void;
     setValue: (value: T) => void;
@@ -19,12 +20,14 @@ interface IUseHandlePropertyProps<T = any> {
 export const useHandleProperty = (props: IUseHandlePropertyProps): IUseHandleProperty => {
     const [_data, _setData] = useState<IProperty>(props.data);
     const [_valueDirty, _setValueDirty] = useState<boolean>(false);
+    const [_keyDirty, _setKeyDirty] = useState<boolean>(false);
 
     useEffect(() => {
         _setData(props.data);
     }, [props.data])
 
     const _setKey = (value: string) => {
+        _setKeyDirty(true);
         let newData: IProperty = {
             ..._data,
             key: value
@@ -47,6 +50,7 @@ export const useHandleProperty = (props: IUseHandlePropertyProps): IUseHandlePro
     }
 
     const _save = () => {
+        _setKeyDirty(false);
         _setValueDirty(false);
         props.onSave(_data);
     }
@@ -56,6 +60,7 @@ export const useHandleProperty = (props: IUseHandlePropertyProps): IUseHandlePro
         setKey: _setKey,
         data: _data,
         valueDirty: _valueDirty,
+        keyDirty: _keyDirty,
         remove: _remove,
         save: _save
     }
