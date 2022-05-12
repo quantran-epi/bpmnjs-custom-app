@@ -1,20 +1,16 @@
-import { selectedNode } from '../../features/PropertiesPanel/PropertiesPanelSlice';
-import React, { useContext, useMemo, useState } from 'react';
-// import { Accordion, Button, Card, Form, InputGroup } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
-import { AppContext } from '../../AppContext';
-import { ELEMENT_TYPES } from '../../constants';
-import { INode } from '../../models/Node';
-import { RootState } from '../../store';
-import { DynamicCreateProperties } from '../Block/DynamicCreateProperties';
-import './DiagramPropertiesPanel.scss';
-import { AppBar, Divider, IconButton, Paper, Stack, Toolbar } from '@mui/material';
-import { Box } from '@mui/system';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Typography from '@mui/material/Typography';
 import { Accordion, AccordionDetails, AccordionSummary } from '@components/Accordion';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
+import { AppBar, IconButton, Paper, Stack, Toolbar } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import { Box } from '@mui/system';
+import React, { useContext } from 'react';
+// import { Accordion, Button, Card, Form, InputGroup } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+import { AppContext } from '../../AppContext';
+import { selectedNode } from '../../features/PropertiesPanel/PropertiesPanelSlice';
+import { DynamicCreateProperties } from '../Block/DynamicCreateProperties';
+import './DiagramPropertiesPanel.scss';
 
 export const DiagramPropertiesPanel = () => {
     const _selectedNode = useSelector(selectedNode);

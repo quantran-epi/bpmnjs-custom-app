@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Accordion, AccordionDetails, AccordionSummary } from '@components/Accordion';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import { CodeEditorProperty } from './PropertyTemplate/CodeEditorProperty';
 
 interface IDynamicCreatePropertiesProps {
     node: INode;
@@ -36,10 +37,23 @@ export const DynamicCreateProperties: FunctionComponent<IDynamicCreateProperties
 
     const _onAddTextProperty = () => {
         let newProperty: IProperty = {
-            id: template.basic.textInput.name.prefix.concat("_").concat(nanoid()),
-            key: template.basic.textInput.name.prefix.concat("_").concat(nanoid(10)),
+            id: template.basic.textInput.key.prefix.concat("_").concat(nanoid()),
+            key: template.basic.textInput.key.prefix.concat("_").concat(nanoid(10)),
             value: "",
             valueType: PropertyType.Text
+        }
+        // _setProperties([..._properties, newProperty]);
+        _saveProperty(newProperty);
+        removeAnchor();
+        if (!expanded) onExpanedChange(null, true);
+    }
+
+    const _onAddCodeEditorProperty = () => {
+        let newProperty: IProperty = {
+            id: template.advanced.codeEditor.key.prefix.concat("_").concat(nanoid()),
+            key: template.advanced.codeEditor.key.prefix.concat("_").concat(nanoid(10)),
+            value: "",
+            valueType: PropertyType.CodeEditor
         }
         // _setProperties([..._properties, newProperty]);
         _saveProperty(newProperty);
@@ -62,6 +76,7 @@ export const DynamicCreateProperties: FunctionComponent<IDynamicCreateProperties
     const _renderProperty = (prop: IProperty): React.ReactNode => {
         switch (prop.valueType) {
             case PropertyType.Text: return <TextProperty key={prop.id} data={prop} onSave={_updateProperty} onRemove={_removeProperty} />
+            case PropertyType.CodeEditor: return <CodeEditorProperty key={prop.id} data={prop} onSave={_updateProperty} onRemove={_removeProperty} />
             default: return;
         }
     }
@@ -95,7 +110,7 @@ export const DynamicCreateProperties: FunctionComponent<IDynamicCreateProperties
                                 'aria-labelledby': 'basic-button',
                             }}>
                             <MenuItem onClick={_onAddTextProperty}>Text</MenuItem>
-                            <MenuItem onClick={removeAnchor}>Number</MenuItem>
+                            <MenuItem onClick={_onAddCodeEditorProperty}>Code editor</MenuItem>
                         </Menu>
                     </div>
                 </Stack>}

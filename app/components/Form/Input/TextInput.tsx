@@ -1,19 +1,18 @@
 import React, { ChangeEvent, FunctionComponent, useEffect, useState } from 'react';
-import { FormControl, FormControlProps } from 'react-bootstrap';
+import TextField, { TextFieldProps } from '@mui/material/TextField';
 
-interface ITextInputProps extends Omit<FormControlProps, "onChange" | "onBlur"> {
+interface ITextInputProps extends Omit<TextFieldProps, "onChange" | "onBlur"> {
     onChangeText?: (value: string) => void;
     onBlur?: () => void;
     onEnter?: () => void;
-    autoFocus?: boolean;
 }
 
-export const TextInput: FunctionComponent<ITextInputProps> = ({
+export const TextInput: FunctionComponent<ITextInputProps> = React.forwardRef(({
     onChangeText,
     onBlur,
     onEnter,
     ...props
-}) => {
+}, ref) => {
     const _onKeyUp = (e: React.KeyboardEvent<any>) => {
         if (e.key === "Enter") onEnter();
     }
@@ -26,5 +25,5 @@ export const TextInput: FunctionComponent<ITextInputProps> = ({
         if (onBlur) onBlur();
     }
 
-    return <FormControl {...props} onChange={_onChangeText} onBlur={_onBlur} onKeyUp={_onKeyUp} />
-}
+    return <TextField ref={ref} {...props} variant={props.variant} onChange={_onChangeText} onBlur={_onBlur} onKeyUp={_onKeyUp} />
+})

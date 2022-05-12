@@ -1,4 +1,5 @@
 export enum PropertyType {
     Text = "Text",
-    Number = "Number"
+    Number = "Number",
+    CodeEditor = "CodeEditor"
 }

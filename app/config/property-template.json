@@ -1,8 +1,15 @@
 {
     "basic": {
         "textInput": {
-            "name": {
+            "key": {
                 "prefix": "textInput"
+            }
+        }
+    },
+    "advanced": {
+        "codeEditor": {
+            "key": {
+                "prefix": "codeEditor"
             }
         }
     }
