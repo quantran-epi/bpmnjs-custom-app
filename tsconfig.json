@@ -27,6 +27,9 @@
             ],
             "@components/*": [
                 "./app/components/*"
+            ],
+            "@helpers/*": [
+                "./app/helpers/*"
             ]
         }
     }

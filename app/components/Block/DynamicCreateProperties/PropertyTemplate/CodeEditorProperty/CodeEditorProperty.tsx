@@ -9,6 +9,7 @@ import { TextInput } from '../../../../Form/Input/';
 import { IBasePropertyTemplateProps } from '../../DynamicCreateProperties.types';
 import CodeMirror from 'codemirror';
 import 'codemirror/lib/codemirror.css';
+import './CodeEditorProperty.scss';
 
 interface ICodeEditorPropertyProps extends IBasePropertyTemplateProps<string> {
 

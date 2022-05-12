@@ -3,7 +3,7 @@ import { PropertyType } from '@constants';
 import { useMenu } from '@hooks/useMenu';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { Box, IconButton, Menu, MenuItem, Stack } from '@mui/material';
-import { nanoid } from 'nanoid';
+import { nanoid } from '@helpers/nanoid';
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addProperty, removeProperties, updateProperty } from '../../../features/PropertiesPanel/PropertiesPanelSlice';
