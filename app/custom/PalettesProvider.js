@@ -194,10 +194,10 @@ CustomPaletteProvider.prototype.getPaletteEntries = function (element) {
         //     'bpmn:Group', 'artifact', 'bpmn-icon-group',
         //     translate('Create Group')
         // ),
-        'create.custom-shape': createAction(
-            'custom:CustomShape', 'event', 'bpmn-icon-start-event-none',
-            translate('Create CustomShape')
-        ),
+        // 'create.custom-shape': createAction(
+        //     'custom:CustomShape', 'event', 'bpmn-icon-start-event-none',
+        //     translate('Create CustomShape')
+        // ),
     });
 
     return actions;

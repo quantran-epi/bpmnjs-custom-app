@@ -23,6 +23,7 @@ export const DiagramPage = () => {
     }
 
     const _onDownloadDiagramProperties = () => {
+        console.log("node json", JSON.stringify(_nodes));
         downloadFile(JSON.stringify(_nodes), "diagram-properties.json", 'text/plain');
     }
 

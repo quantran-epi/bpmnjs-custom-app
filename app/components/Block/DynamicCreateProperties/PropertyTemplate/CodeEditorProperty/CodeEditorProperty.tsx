@@ -59,7 +59,6 @@ export const CodeEditorProperty: FunctionComponent<ICodeEditorPropertyProps> = (
         let editor = CodeMirror.fromTextArea(inputRef.current, {
             mode: "javascript",
             lineNumbers: true,
-            lineSeparator: true
         });
         editor.getDoc().setValue(_data.value);
 
