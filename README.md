@@ -16,19 +16,19 @@ You need a [NodeJS](http://nodejs.org) development stack with [npm](https://npmj
 To install all project dependencies execute
 
 ```
-npm install
+yarn install
 ```
 
 Build the application (including [bpmn-js](https://github.com/bpmn-io/bpmn-js)) via
 
 ```
-npm run all
+yarn run all
 ```
 
 You may also spawn a development setup by executing
 
 ```
-npm run dev
+yarn run dev
 ```
 
 Both tasks generate the distribution ready client-side modeler application into the `public` folder.

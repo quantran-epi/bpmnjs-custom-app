@@ -453,6 +453,18 @@ ContextPadProvider.prototype.getContextPadEntries = function (element) {
         });
     }
 
+    // add custom context pad actions
+    assign(actions, {
+        'custom-action-1': {
+            group: 'edit',
+            className: 'bpmn-icon-group',
+            title: translate('Custom action'),
+            action: {
+                click: () => { alert('custom action on ' + element.id) }
+            }
+        }
+    })
+
     return actions;
 };
 

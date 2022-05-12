@@ -168,6 +168,7 @@ export default function init() {
 
     var downloadLink = $('#js-download-diagram');
     var downloadSvgLink = $('#js-download-svg');
+    var downloadProperties = $('#js-download-properties');
 
     $('.buttons a').click(function (e) {
       if (!$(this).is('.active')) {
@@ -190,6 +191,8 @@ export default function init() {
     }
 
     var exportArtifacts = debounce(async function () {
+
+      downloadProperties.addClass('active');
 
       try {
 

@@ -1,15 +1,30 @@
+import { nodesSelector } from '../features/PropertiesPanel/PropertiesPanelSlice';
 import React, { useContext, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { AppContext } from '../AppContext';
 import { DiagramContainer } from '../components/DiagramContainer';
 import init from '../init';
 
 export const DiagramPage = () => {
     const { setModeler } = useContext(AppContext);
+    const _nodes = useSelector(nodesSelector);
 
     useEffect(() => {
         let _modeler = init();
         setModeler(_modeler);
     }, [])
+
+    const downloadFile = (content, fileName, contentType) => {
+        var a = document.createElement("a");
+        var file = new Blob([content], { type: contentType });
+        a.href = URL.createObjectURL(file);
+        a.download = fileName;
+        a.click();
+    }
+
+    const _onDownloadDiagramProperties = () => {
+        downloadFile(JSON.stringify(_nodes), "diagram-properties.json", 'text/plain');
+    }
 
     return (
         <React.Fragment>
@@ -41,6 +56,11 @@ export const DiagramPage = () => {
                 <li>
                     <a id="js-download-diagram" href="#" title="download BPMN diagram">
                         BPMN diagram
+                    </a>
+                </li>
+                <li>
+                    <a href="#" id='js-download-properties' title="download Diagram properties" onClick={_onDownloadDiagramProperties}>
+                        Diagram properties
                     </a>
                 </li>
                 <li>

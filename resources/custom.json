@@ -7,7 +7,7 @@
     },
     "types": [
         {
-            "name": "RestApi",
+            "name": "CustomShape",
             "superClass": [
                 "bpmn:FlowNode",
                 "bpmn:InteractionNode"

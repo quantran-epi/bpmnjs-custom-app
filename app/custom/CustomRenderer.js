@@ -5,11 +5,21 @@ import {
     attr as svgAttr,
     create as svgCreate,
     remove as svgRemove,
+    classes as svgClasses,
     innerSVG
 } from 'tiny-svg';
 
 import {
+    assign,
+} from 'min-dash';
+
+import {
     getRoundRectPath
+} from 'bpmn-js/lib/draw/BpmnRenderUtil';
+
+import {
+    getSemantic,
+    getLabelColor
 } from 'bpmn-js/lib/draw/BpmnRenderUtil';
 
 import { is } from 'bpmn-js/lib/util/ModelUtil';
@@ -20,54 +30,70 @@ const HIGH_PRIORITY = 1500,
 
 
 export default class CustomRenderer extends BaseRenderer {
-    constructor(eventBus, bpmnRenderer) {
+    constructor(eventBus, bpmnRenderer, textRenderer) {
         super(eventBus, HIGH_PRIORITY);
 
         this.bpmnRenderer = bpmnRenderer;
+        this.textRenderer = textRenderer;
     }
 
     canRender(element) {
 
         // only render tasks and events (ignore labels)
-        return isAny(element, ['bpmn:Task', 'bpmn:Event', 'custom:RestApi']) && !element.labelTarget;
+        return isAny(element, ['custom:CustomShape']) && !element.labelTarget;
     }
 
     drawShape(parentNode, element) {
-        const shape = this.bpmnRenderer.drawShape(parentNode, element);
+        const rect = drawRect(parentNode, element.width, element.height, TASK_BORDER_RADIUS, '#cc0000');
 
-        // if (is(element, 'bpmn:Task')) {
-        //     const rect = drawRect(parentNode, 100, 80, TASK_BORDER_RADIUS, '#52B415');
-
-        //     prependTo(rect, parentNode);
-
-        //     svgRemove(shape);
-
-        //     return shape;
-        // }
-
-        // const rect = drawRect(parentNode, 30, 20, TASK_BORDER_RADIUS, '#cc0000');
-        if (is(element, 'custom:RestApi')) {
+        if (is(element, 'custom:CustomShape')) {
             const text = svgCreate("text");
-            innerSVG(text, "api");
+            innerSVG(text, "custom");
             svgAppend(parentNode, text);
 
             svgAttr(text, {
                 transform: 'translate(-3, -3)'
             });
-            return shape;
+
+            let semantic = getSemantic(element);
+
+            this.renderLabel(parentNode, semantic.name, {
+                box: element,
+                align: 'center-middle',
+                padding: 5,
+            })
+
+            return rect;
         }
     }
 
-    getShapePath(shape) {
-        if (is(shape, 'bpmn:Task')) {
-            return getRoundRectPath(shape, TASK_BORDER_RADIUS);
-        }
+    renderLabel(parentGfx, label, options) {
 
-        return this.bpmnRenderer.getShapePath(shape);
+        options = assign({
+            size: {
+                width: 100
+            }
+        }, options);
+
+        var text = this.textRenderer.createText(label || '', options);
+
+        svgClasses(text).add('djs-label');
+
+        svgAppend(parentGfx, text);
+
+        return text;
     }
+
+    // getShapePath(shape) {
+    //     if (is(shape, 'bpmn:Task')) {
+    //         return getRoundRectPath(shape, TASK_BORDER_RADIUS);
+    //     }
+
+    //     return this.bpmnRenderer.getShapePath(shape);
+    // }
 }
 
-CustomRenderer.$inject = ['eventBus', 'bpmnRenderer'];
+CustomRenderer.$inject = ['eventBus', 'bpmnRenderer', 'textRenderer'];
 
 // helpers //////////
 

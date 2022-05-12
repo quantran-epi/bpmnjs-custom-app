@@ -29,7 +29,7 @@ export function isLabelExternal(semantic) {
     is(semantic, 'bpmn:SequenceFlow') ||
     is(semantic, 'bpmn:MessageFlow') ||
     is(semantic, 'bpmn:Group') ||
-    is(semantic, 'custom:RestApi');
+    is(semantic, 'custom:CustomShape');
 }
 
 /**

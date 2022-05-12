@@ -86,4 +86,6 @@ export default PropertiesPanelSlice.reducer
 const selectSelf = (state: RootState) => state
 export const selectedNode = createSelector(selectSelf,
     (state: RootState) => state.propertiesPanel.nodes
-        .find(e => e.id === state.propertiesPanel.selectedNodeId)) 
+        .find(e => e.id === state.propertiesPanel.selectedNodeId))
+
+export const nodesSelector = createSelector(selectSelf, (state: RootState) => state.propertiesPanel.nodes);

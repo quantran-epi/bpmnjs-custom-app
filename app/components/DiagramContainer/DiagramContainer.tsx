@@ -35,7 +35,7 @@ export const DiagramContainer = () => {
         let eventBus = modeler.get('eventBus');
 
         eventBus.on('element.changed', function (e) {
-            console.log('element changed', e.element.businessObject.name);
+            console.log('element changed', e.element);
             if (e.element.type === "label")
                 _handleLabelUpdated(e.element);
             else

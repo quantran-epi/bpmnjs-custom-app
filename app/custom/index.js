@@ -3,6 +3,7 @@ import CustomContextPad from './CustomContextPad';
 import CustomPalette from './CustomPalette';
 import CustomRenderer from './CustomRenderer';
 import PalettesProvider from './PalettesProvider';
+import LabelEditingProvider from './LabelEditingProvider';
 
 export default {
     __init__: [
@@ -10,6 +11,7 @@ export default {
         // 'customPalette',
         'customRenderer',
     ],
+    labelEditingProvider: ['type', LabelEditingProvider],
     paletteProvider: ['type', PalettesProvider],
     contextPadProvider: ['type', ContextPadProvider],
     // customContextPad: ['type', CustomContextPad],
