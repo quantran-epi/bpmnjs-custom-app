@@ -197,148 +197,148 @@ ContextPadProvider.prototype.getContextPadEntries = function (element) {
     }
 
 
-    if (isAny(businessObject, ['bpmn:Lane', 'bpmn:Participant']) && isExpanded(element)) {
+    // if (isAny(businessObject, ['bpmn:Lane', 'bpmn:Participant']) && isExpanded(element)) {
 
-        var childLanes = getChildLanes(element);
+    //     var childLanes = getChildLanes(element);
 
-        assign(actions, {
-            'lane-insert-above': {
-                group: 'lane-insert-above',
-                className: 'bpmn-icon-lane-insert-above',
-                title: translate('Add Lane above'),
-                action: {
-                    click: function (event, element) {
-                        modeling.addLane(element, 'top');
-                    }
-                }
-            }
-        });
+    //     assign(actions, {
+    //         'lane-insert-above': {
+    //             group: 'lane-insert-above',
+    //             className: 'bpmn-icon-lane-insert-above',
+    //             title: translate('Add Lane above'),
+    //             action: {
+    //                 click: function (event, element) {
+    //                     modeling.addLane(element, 'top');
+    //                 }
+    //             }
+    //         }
+    //     });
 
-        if (childLanes.length < 2) {
+    //     if (childLanes.length < 2) {
 
-            if (element.height >= 120) {
-                assign(actions, {
-                    'lane-divide-two': {
-                        group: 'lane-divide',
-                        className: 'bpmn-icon-lane-divide-two',
-                        title: translate('Divide into two Lanes'),
-                        action: {
-                            click: splitLaneHandler(2)
-                        }
-                    }
-                });
-            }
+    //         if (element.height >= 120) {
+    //             assign(actions, {
+    //                 'lane-divide-two': {
+    //                     group: 'lane-divide',
+    //                     className: 'bpmn-icon-lane-divide-two',
+    //                     title: translate('Divide into two Lanes'),
+    //                     action: {
+    //                         click: splitLaneHandler(2)
+    //                     }
+    //                 }
+    //             });
+    //         }
 
-            if (element.height >= 180) {
-                assign(actions, {
-                    'lane-divide-three': {
-                        group: 'lane-divide',
-                        className: 'bpmn-icon-lane-divide-three',
-                        title: translate('Divide into three Lanes'),
-                        action: {
-                            click: splitLaneHandler(3)
-                        }
-                    }
-                });
-            }
-        }
+    //         if (element.height >= 180) {
+    //             assign(actions, {
+    //                 'lane-divide-three': {
+    //                     group: 'lane-divide',
+    //                     className: 'bpmn-icon-lane-divide-three',
+    //                     title: translate('Divide into three Lanes'),
+    //                     action: {
+    //                         click: splitLaneHandler(3)
+    //                     }
+    //                 }
+    //             });
+    //         }
+    //     }
 
-        assign(actions, {
-            'lane-insert-below': {
-                group: 'lane-insert-below',
-                className: 'bpmn-icon-lane-insert-below',
-                title: translate('Add Lane below'),
-                action: {
-                    click: function (event, element) {
-                        modeling.addLane(element, 'bottom');
-                    }
-                }
-            }
-        });
+    //     assign(actions, {
+    //         'lane-insert-below': {
+    //             group: 'lane-insert-below',
+    //             className: 'bpmn-icon-lane-insert-below',
+    //             title: translate('Add Lane below'),
+    //             action: {
+    //                 click: function (event, element) {
+    //                     modeling.addLane(element, 'bottom');
+    //                 }
+    //             }
+    //         }
+    //     });
 
-    }
+    // }
 
-    if (is(businessObject, 'bpmn:FlowNode')) {
+    // if (is(businessObject, 'bpmn:FlowNode')) {
 
-        if (is(businessObject, 'bpmn:EventBasedGateway')) {
+    //     if (is(businessObject, 'bpmn:EventBasedGateway')) {
 
-            assign(actions, {
-                'append.receive-task': appendAction(
-                    'bpmn:ReceiveTask',
-                    'bpmn-icon-receive-task',
-                    translate('Append ReceiveTask')
-                ),
-                'append.message-intermediate-event': appendAction(
-                    'bpmn:IntermediateCatchEvent',
-                    'bpmn-icon-intermediate-event-catch-message',
-                    translate('Append MessageIntermediateCatchEvent'),
-                    { eventDefinitionType: 'bpmn:MessageEventDefinition' }
-                ),
-                'append.timer-intermediate-event': appendAction(
-                    'bpmn:IntermediateCatchEvent',
-                    'bpmn-icon-intermediate-event-catch-timer',
-                    translate('Append TimerIntermediateCatchEvent'),
-                    { eventDefinitionType: 'bpmn:TimerEventDefinition' }
-                ),
-                'append.condition-intermediate-event': appendAction(
-                    'bpmn:IntermediateCatchEvent',
-                    'bpmn-icon-intermediate-event-catch-condition',
-                    translate('Append ConditionIntermediateCatchEvent'),
-                    { eventDefinitionType: 'bpmn:ConditionalEventDefinition' }
-                ),
-                'append.signal-intermediate-event': appendAction(
-                    'bpmn:IntermediateCatchEvent',
-                    'bpmn-icon-intermediate-event-catch-signal',
-                    translate('Append SignalIntermediateCatchEvent'),
-                    { eventDefinitionType: 'bpmn:SignalEventDefinition' }
-                )
-            });
-        } else
+    //         assign(actions, {
+    //             'append.receive-task': appendAction(
+    //                 'bpmn:ReceiveTask',
+    //                 'bpmn-icon-receive-task',
+    //                 translate('Append ReceiveTask')
+    //             ),
+    //             'append.message-intermediate-event': appendAction(
+    //                 'bpmn:IntermediateCatchEvent',
+    //                 'bpmn-icon-intermediate-event-catch-message',
+    //                 translate('Append MessageIntermediateCatchEvent'),
+    //                 { eventDefinitionType: 'bpmn:MessageEventDefinition' }
+    //             ),
+    //             'append.timer-intermediate-event': appendAction(
+    //                 'bpmn:IntermediateCatchEvent',
+    //                 'bpmn-icon-intermediate-event-catch-timer',
+    //                 translate('Append TimerIntermediateCatchEvent'),
+    //                 { eventDefinitionType: 'bpmn:TimerEventDefinition' }
+    //             ),
+    //             'append.condition-intermediate-event': appendAction(
+    //                 'bpmn:IntermediateCatchEvent',
+    //                 'bpmn-icon-intermediate-event-catch-condition',
+    //                 translate('Append ConditionIntermediateCatchEvent'),
+    //                 { eventDefinitionType: 'bpmn:ConditionalEventDefinition' }
+    //             ),
+    //             'append.signal-intermediate-event': appendAction(
+    //                 'bpmn:IntermediateCatchEvent',
+    //                 'bpmn-icon-intermediate-event-catch-signal',
+    //                 translate('Append SignalIntermediateCatchEvent'),
+    //                 { eventDefinitionType: 'bpmn:SignalEventDefinition' }
+    //             )
+    //         });
+    //     } else
 
-            if (isEventType(businessObject, 'bpmn:BoundaryEvent', 'bpmn:CompensateEventDefinition')) {
+    //         if (isEventType(businessObject, 'bpmn:BoundaryEvent', 'bpmn:CompensateEventDefinition')) {
 
-                assign(actions, {
-                    'append.compensation-activity':
-                        appendAction(
-                            'bpmn:Task',
-                            'bpmn-icon-task',
-                            translate('Append compensation activity'),
-                            {
-                                isForCompensation: true
-                            }
-                        )
-                });
-            } else
+    //             assign(actions, {
+    //                 'append.compensation-activity':
+    //                     appendAction(
+    //                         'bpmn:Task',
+    //                         'bpmn-icon-task',
+    //                         translate('Append compensation activity'),
+    //                         {
+    //                             isForCompensation: true
+    //                         }
+    //                     )
+    //             });
+    //         } else
 
-                if (!is(businessObject, 'bpmn:EndEvent') &&
-                    !businessObject.isForCompensation &&
-                    !isEventType(businessObject, 'bpmn:IntermediateThrowEvent', 'bpmn:LinkEventDefinition') &&
-                    !isEventSubProcess(businessObject)) {
+    //             if (!is(businessObject, 'bpmn:EndEvent') &&
+    //                 !businessObject.isForCompensation &&
+    //                 !isEventType(businessObject, 'bpmn:IntermediateThrowEvent', 'bpmn:LinkEventDefinition') &&
+    //                 !isEventSubProcess(businessObject)) {
 
-                    assign(actions, {
-                        'append.end-event': appendAction(
-                            'bpmn:EndEvent',
-                            'bpmn-icon-end-event-none',
-                            translate('Append EndEvent')
-                        ),
-                        'append.gateway': appendAction(
-                            'bpmn:ExclusiveGateway',
-                            'bpmn-icon-gateway-none',
-                            translate('Append Gateway')
-                        ),
-                        'append.append-task': appendAction(
-                            'bpmn:Task',
-                            'bpmn-icon-task',
-                            translate('Append Task')
-                        ),
-                        'append.intermediate-event': appendAction(
-                            'bpmn:IntermediateThrowEvent',
-                            'bpmn-icon-intermediate-event-none',
-                            translate('Append Intermediate/Boundary Event')
-                        )
-                    });
-                }
-    }
+    //                 assign(actions, {
+    //                     'append.end-event': appendAction(
+    //                         'bpmn:EndEvent',
+    //                         'bpmn-icon-end-event-none',
+    //                         translate('Append EndEvent')
+    //                     ),
+    //                     'append.gateway': appendAction(
+    //                         'bpmn:ExclusiveGateway',
+    //                         'bpmn-icon-gateway-none',
+    //                         translate('Append Gateway')
+    //                     ),
+    //                     'append.append-task': appendAction(
+    //                         'bpmn:Task',
+    //                         'bpmn-icon-task',
+    //                         translate('Append Task')
+    //                     ),
+    //                     'append.intermediate-event': appendAction(
+    //                         'bpmn:IntermediateThrowEvent',
+    //                         'bpmn-icon-intermediate-event-none',
+    //                         translate('Append Intermediate/Boundary Event')
+    //                     )
+    //                 });
+    //             }
+    // }
 
     // if (!popupMenu.isEmpty(element, 'bpmn-replace')) {
 
@@ -362,71 +362,71 @@ ContextPadProvider.prototype.getContextPadEntries = function (element) {
     //     });
     // }
 
-    if (
-        isAny(businessObject, [
-            'bpmn:FlowNode',
-            'bpmn:InteractionNode',
-            'bpmn:DataObjectReference',
-            'bpmn:DataStoreReference',
-        ])
-    ) {
-        assign(actions, {
-            'append.text-annotation': appendAction(
-                'bpmn:TextAnnotation',
-                'bpmn-icon-text-annotation'
-            ),
+    // if (
+    //     isAny(businessObject, [
+    //         'bpmn:FlowNode',
+    //         'bpmn:InteractionNode',
+    //         'bpmn:DataObjectReference',
+    //         'bpmn:DataStoreReference',
+    //     ])
+    // ) {
+    //     assign(actions, {
+    //         'append.text-annotation': appendAction(
+    //             'bpmn:TextAnnotation',
+    //             'bpmn-icon-text-annotation'
+    //         ),
 
-            'connect': {
-                group: 'connect',
-                className: 'bpmn-icon-connection-multi',
-                title: translate(
-                    'Connect using ' +
-                    (businessObject.isForCompensation
-                        ? ''
-                        : 'Sequence/MessageFlow or ') +
-                    'Association'
-                ),
-                action: {
-                    click: startConnect,
-                    dragstart: startConnect,
-                },
-            },
-        });
-    }
+    //         'connect': {
+    //             group: 'connect',
+    //             className: 'bpmn-icon-connection-multi',
+    //             title: translate(
+    //                 'Connect using ' +
+    //                 (businessObject.isForCompensation
+    //                     ? ''
+    //                     : 'Sequence/MessageFlow or ') +
+    //                 'Association'
+    //             ),
+    //             action: {
+    //                 click: startConnect,
+    //                 dragstart: startConnect,
+    //             },
+    //         },
+    //     });
+    // }
 
-    if (is(businessObject, 'bpmn:TextAnnotation')) {
-        assign(actions, {
-            'connect': {
-                group: 'connect',
-                className: 'bpmn-icon-connection-multi',
-                title: translate('Connect using Association'),
-                action: {
-                    click: startConnect,
-                    dragstart: startConnect,
-                },
-            },
-        });
-    }
+    // if (is(businessObject, 'bpmn:TextAnnotation')) {
+    //     assign(actions, {
+    //         'connect': {
+    //             group: 'connect',
+    //             className: 'bpmn-icon-connection-multi',
+    //             title: translate('Connect using Association'),
+    //             action: {
+    //                 click: startConnect,
+    //                 dragstart: startConnect,
+    //             },
+    //         },
+    //     });
+    // }
 
-    if (isAny(businessObject, ['bpmn:DataObjectReference', 'bpmn:DataStoreReference'])) {
-        assign(actions, {
-            'connect': {
-                group: 'connect',
-                className: 'bpmn-icon-connection-multi',
-                title: translate('Connect using DataInputAssociation'),
-                action: {
-                    click: startConnect,
-                    dragstart: startConnect
-                }
-            }
-        });
-    }
+    // if (isAny(businessObject, ['bpmn:DataObjectReference', 'bpmn:DataStoreReference'])) {
+    //     assign(actions, {
+    //         'connect': {
+    //             group: 'connect',
+    //             className: 'bpmn-icon-connection-multi',
+    //             title: translate('Connect using DataInputAssociation'),
+    //             action: {
+    //                 click: startConnect,
+    //                 dragstart: startConnect
+    //             }
+    //         }
+    //     });
+    // }
 
-    if (is(businessObject, 'bpmn:Group')) {
-        assign(actions, {
-            'append.text-annotation': appendAction('bpmn:TextAnnotation', 'bpmn-icon-text-annotation')
-        });
-    }
+    // if (is(businessObject, 'bpmn:Group')) {
+    //     assign(actions, {
+    //         'append.text-annotation': appendAction('bpmn:TextAnnotation', 'bpmn-icon-text-annotation')
+    //     });
+    // }
 
     // delete element entry, only show if allowed by rules
     var deleteAllowed = rules.allowed('elements.delete', { elements: [element] });
@@ -464,6 +464,24 @@ ContextPadProvider.prototype.getContextPadEntries = function (element) {
     //         }
     //     }
     // })
+
+    assign(actions, {
+        'connect': {
+            group: 'connect',
+            className: 'bpmn-icon-connection-multi',
+            title: translate(
+                'Connect using ' +
+                (businessObject.isForCompensation
+                    ? ''
+                    : 'Sequence/MessageFlow or ') +
+                'Association'
+            ),
+            action: {
+                click: startConnect,
+                dragstart: startConnect,
+            },
+        },
+    });
 
     return actions;
 };

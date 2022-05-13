@@ -19,7 +19,6 @@ export const VideoProperty: FunctionComponent<IVideoPropertyProps> = ({
     onRemove,
     readonly = false,
     autoExpand = false,
-    dynamic = true
 }) => {
     const { data: _data, valueDirty, keyDirty, setKey, setValue, remove, save } = useHandleProperty<IVideoPropertyData>({ data, onRemove, onSave });
     const [expanded, setExpanded] = React.useState<string | false>(false);
@@ -94,7 +93,7 @@ export const VideoProperty: FunctionComponent<IVideoPropertyProps> = ({
                         onChangeText={setKey}
                         onBlur={_onKeyTextBoxBlur}
                         onEnter={_onKeyTextBoxEnter}
-                        disabled={!dynamic} />
+                        disabled={!_data.dynamic} />
                     <FormControl fullWidth>
                         <InputLabel id="demo-simple-select-label">Source Type</InputLabel>
                         <Select

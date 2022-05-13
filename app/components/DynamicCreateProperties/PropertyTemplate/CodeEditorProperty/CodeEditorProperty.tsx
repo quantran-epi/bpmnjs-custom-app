@@ -98,7 +98,8 @@ export const CodeEditorProperty: FunctionComponent<ICodeEditorPropertyProps> = (
                         value={_data.key}
                         onChangeText={setKey}
                         onBlur={_onKeyTextBoxBlur}
-                        onEnter={_onKeyTextBoxEnter} />
+                        onEnter={_onKeyTextBoxEnter}
+                        disabled={!_data.dynamic} />
                     {/* <TextInput
                         ref={inputRef}
                         size="small"

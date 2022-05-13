@@ -17,7 +17,7 @@ export const TextProperty: FunctionComponent<ITextPropertyProps> = ({
     onSave,
     onRemove,
     readonly = false,
-    autoExpand = false
+    autoExpand = false,
 }) => {
     const { data: _data, valueDirty, keyDirty, setKey, setValue, remove, save } = useHandleProperty({ data, onRemove, onSave });
     const [expanded, setExpanded] = React.useState<string | false>(false);
@@ -69,7 +69,8 @@ export const TextProperty: FunctionComponent<ITextPropertyProps> = ({
                         value={_data.key}
                         onChangeText={setKey}
                         onBlur={_onKeyTextBoxBlur}
-                        onEnter={_onKeyTextBoxEnter} />
+                        onEnter={_onKeyTextBoxEnter}
+                        disabled={!_data.dynamic} />
                     <TextInput
                         size="small"
                         label="Value"

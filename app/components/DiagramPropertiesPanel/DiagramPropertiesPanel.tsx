@@ -23,7 +23,7 @@ export const DiagramPropertiesPanel = () => {
         additionalProperties: "additionalProperties"
     }
 
-    const [expanded, setExpanded] = React.useState<string | false>(false);
+    const [expanded, setExpanded] = React.useState<string | false>(accordionKeys.basicProperties);
 
     const handleChange =
         (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
