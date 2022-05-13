@@ -16,6 +16,8 @@ import ZeebeModdleModule from 'zeebe-bpmn-moddle/lib';
 
 import minimapModule from 'diagram-js-minimap';
 
+import CustomMenuExtension from './custom/testing';
+
 import {
   BpmnPropertiesPanelModule,
   BpmnPropertiesProviderModule,
@@ -56,7 +58,9 @@ export default function init() {
       CloudElementTemplatesPropertiesProviderModule,
       TemplateIconRendererModule,
       ZeebeModdleModule,
-      minimapModule
+      minimapModule,
+
+      // CustomMenuExtension
     ],
     moddleExtensions: {
       custom: customPackage,

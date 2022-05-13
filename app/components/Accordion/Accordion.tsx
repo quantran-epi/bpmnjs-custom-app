@@ -18,10 +18,13 @@ interface ICustomAccordionProps extends AccordionProps {
     bottomSeparator?: boolean;
 }
 
-export const Accordion = styled((props: ICustomAccordionProps) => (
+export const Accordion = styled(({
+    bottomSeparator,
+    ...props
+}: ICustomAccordionProps) => (
     <div>
         <MuiAccordion disableGutters elevation={0} square {...props} />
-        {props.bottomSeparator && <Divider />}
+        {bottomSeparator && <Divider />}
     </div>
 ))(({ theme }) => ({
     '&:not(:last-child)': {
@@ -34,16 +37,17 @@ export const Accordion = styled((props: ICustomAccordionProps) => (
 
 export const AccordionSummary = styled(({
     expandPosition = "right",
+    expandButton,
     ...props
 }: ICustomAccordionSummaryProps) => (
     <Stack direction={"row"}>
-        {expandPosition === "left" && props.expandButton}
+        {expandPosition === "left" && expandButton}
         <MuiAccordionSummary
             style={{ flex: 1, ...props.style }}
             {...props}
         />
         {props.toolbar}
-        {expandPosition === "right" && props.expandButton}
+        {expandPosition === "right" && expandButton}
     </Stack>
 ))(({ theme }) => ({
     minHeight: 25,
