@@ -24,9 +24,14 @@ import {
 
 import { is } from 'bpmn-js/lib/util/ModelUtil';
 import { isAny } from 'bpmn-js/lib/features/modeling/util/ModelingUtil';
+import { webElementSvg } from '@components/DiagramElement/WebElement/icon';
 
 const HIGH_PRIORITY = 1500,
     TASK_BORDER_RADIUS = 2;
+
+function getSvgFromString(xml_string) {
+    return new DOMParser().parseFromString(xml_string, 'application/xml').documentElement;
+}
 
 
 export default class CustomRenderer extends BaseRenderer {
@@ -40,26 +45,27 @@ export default class CustomRenderer extends BaseRenderer {
     canRender(element) {
 
         // only render tasks and events (ignore labels)
-        return isAny(element, ['custom:CustomShape']) && !element.labelTarget;
+        return isAny(element, ['custom:Web']) && !element.labelTarget;
     }
 
     drawShape(parentNode, element) {
-        const rect = drawRect(parentNode, element.width, element.height, TASK_BORDER_RADIUS, '#cc0000');
+        const rect = drawRect(parentNode, element.width, element.height, TASK_BORDER_RADIUS, '#000');
 
-        if (is(element, 'custom:CustomShape')) {
-            const text = svgCreate("text");
-            innerSVG(text, "custom");
-            svgAppend(parentNode, text);
+        if (is(element, 'custom:Web')) {
+            const iconWrapper = svgCreate("g");
+            const icon = getSvgFromString(webElementSvg);
+            svgAppend(iconWrapper, icon);
+            svgAppend(parentNode, iconWrapper);
 
-            svgAttr(text, {
-                transform: 'translate(-3, -3)'
+            svgAttr(iconWrapper, {
+                transform: `translate(0, ${element.height - 37})`
             });
 
             let semantic = getSemantic(element);
 
             this.renderLabel(parentNode, semantic.name, {
                 box: element,
-                align: 'center-middle',
+                align: 'center-top',
                 padding: 5,
             })
 

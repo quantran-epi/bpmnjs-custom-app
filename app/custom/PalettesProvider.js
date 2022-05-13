@@ -2,7 +2,7 @@ import {
     assign
 } from 'min-dash';
 import { getDi } from 'bpmn-js/lib/util/ModelUtil';
-
+import { webElementSvgUrl } from '@components/DiagramElement/WebElement/icon';
 
 /**
  * A palette provider for BPMN 2.0 elements.
@@ -99,6 +99,14 @@ CustomPaletteProvider.prototype.getPaletteEntries = function (element) {
         create.start(event, elementFactory.createParticipantShape());
     }
 
+    function createWeb(event) {
+        var webShape = elementFactory.create(
+            'shape', { type: 'custom:Web' }
+        );
+
+        create.start(event, webShape);
+    }
+
     assign(actions, {
         'hand-tool': {
             group: 'tools',
@@ -144,26 +152,26 @@ CustomPaletteProvider.prototype.getPaletteEntries = function (element) {
             group: 'tools',
             separator: true
         },
-        'create.start-event': createAction(
-            'bpmn:StartEvent', 'event', 'bpmn-icon-start-event-none',
-            translate('Create StartEvent')
-        ),
-        'create.intermediate-event': createAction(
-            'bpmn:IntermediateThrowEvent', 'event', 'bpmn-icon-intermediate-event-none',
-            translate('Create Intermediate/Boundary Event')
-        ),
-        'create.end-event': createAction(
-            'bpmn:EndEvent', 'event', 'bpmn-icon-end-event-none',
-            translate('Create EndEvent')
-        ),
-        'create.exclusive-gateway': createAction(
-            'bpmn:ExclusiveGateway', 'gateway', 'bpmn-icon-gateway-none',
-            translate('Create Gateway')
-        ),
-        'create.task': createAction(
-            'bpmn:Task', 'activity', 'bpmn-icon-task',
-            translate('Create Task')
-        ),
+        // 'create.start-event': createAction(
+        //     'bpmn:StartEvent', 'event', 'bpmn-icon-start-event-none',
+        //     translate('Create StartEvent')
+        // ),
+        // 'create.intermediate-event': createAction(
+        //     'bpmn:IntermediateThrowEvent', 'event', 'bpmn-icon-intermediate-event-none',
+        //     translate('Create Intermediate/Boundary Event')
+        // ),
+        // 'create.end-event': createAction(
+        //     'bpmn:EndEvent', 'event', 'bpmn-icon-end-event-none',
+        //     translate('Create EndEvent')
+        // ),
+        // 'create.exclusive-gateway': createAction(
+        //     'bpmn:ExclusiveGateway', 'gateway', 'bpmn-icon-gateway-none',
+        //     translate('Create Gateway')
+        // ),
+        // 'create.task': createAction(
+        //     'bpmn:Task', 'activity', 'bpmn-icon-task',
+        //     translate('Create Task')
+        // ),
         // 'create.data-object': createAction(
         //     'bpmn:DataObjectReference', 'data-object', 'bpmn-icon-data-object',
         //     translate('Create DataObjectReference')
@@ -194,10 +202,15 @@ CustomPaletteProvider.prototype.getPaletteEntries = function (element) {
         //     'bpmn:Group', 'artifact', 'bpmn-icon-group',
         //     translate('Create Group')
         // ),
-        // 'create.custom-shape': createAction(
-        //     'custom:CustomShape', 'event', 'bpmn-icon-start-event-none',
-        //     translate('Create CustomShape')
-        // ),
+        'create.web': {
+            group: 'activity',
+            imageUrl: webElementSvgUrl,
+            title: translate('Create web'),
+            action: {
+                dragstart: createWeb,
+                click: createWeb
+            }
+        },
     });
 
     return actions;

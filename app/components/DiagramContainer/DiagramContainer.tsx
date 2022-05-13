@@ -1,3 +1,4 @@
+import { initProperties } from '@helpers/initProperty';
 import React, { useContext, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { AppContext } from '../../AppContext';
@@ -55,7 +56,7 @@ export const DiagramContainer = () => {
                 label: e.element.id,
                 typelLabel: PanelHeaderProvider.getTypeLabel(e.element, modeler),
                 type: e.element.type,
-                properties: []
+                properties: initProperties(e.element.id, e.element.type)
             }));
         })
 

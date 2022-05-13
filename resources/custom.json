@@ -7,7 +7,7 @@
     },
     "types": [
         {
-            "name": "CustomShape",
+            "name": "Web",
             "superClass": [
                 "bpmn:FlowNode",
                 "bpmn:InteractionNode"

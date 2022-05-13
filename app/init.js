@@ -51,27 +51,27 @@ export default function init() {
     container: '#js-canvas',
     additionalModules: [
       customModules,
-      ConnectorsExtensionModule,
-      BpmnPropertiesPanelModule,
-      BpmnPropertiesProviderModule,
-      ZeebePropertiesProviderModule,
-      CloudElementTemplatesPropertiesProviderModule,
-      TemplateIconRendererModule,
-      ZeebeModdleModule,
+      // ConnectorsExtensionModule,
+      // BpmnPropertiesPanelModule,
+      // BpmnPropertiesProviderModule,
+      // ZeebePropertiesProviderModule,
+      // CloudElementTemplatesPropertiesProviderModule,
+      // TemplateIconRendererModule,
+      // ZeebeModdleModule,
       minimapModule,
 
       // CustomMenuExtension
     ],
     moddleExtensions: {
       custom: customPackage,
-      zeebe: ZeebeModdle
+      // zeebe: ZeebeModdle
     },
     keyboard: {
       bindTo: document
     },
-    connectorsExtension: {
-      appendAnything: true,
-    },
+    // connectorsExtension: {
+    //   appendAnything: true,
+    // },
     // propertiesPanel: {
     //   parent: '#js-properties-panel'
     // },
@@ -86,7 +86,7 @@ export default function init() {
     showTemplateErrors(errors);
   });
 
-  modeler.get('connectorsExtension').loadTemplates(TEMPLATES);
+  // modeler.get('connectorsExtension').loadTemplates(TEMPLATES);
 
   function createNewDiagram() {
     openDiagram(diagramXML);

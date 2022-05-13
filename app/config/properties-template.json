@@ -1,0 +1,9 @@
+{
+    "web": {
+        "properties": {
+            "href": {
+                "type": "Text"
+            }
+        }
+    }
+}

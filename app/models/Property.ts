@@ -4,4 +4,5 @@ export type IProperty<T = any> = {
     valueType: PropertyType;
     key: string;
     value: T;
+    dynamic: boolean;
 }

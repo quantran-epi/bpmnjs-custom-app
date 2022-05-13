@@ -6,7 +6,7 @@ interface IUseHandleProperty<T = any> {
     keyDirty: boolean;
     valueDirtyRef: RefObject<boolean>;
     keyDirtyRef: RefObject<boolean>;
-    data: T;
+    data: IProperty<T>;
     setKey: (value: string) => void;
     setValue: (value: T) => void;
     save: () => void;
@@ -21,8 +21,8 @@ interface IUseHandlePropertyProps<T = any> {
     onSave: (data: IProperty<T>) => void;
 }
 
-export const useHandleProperty = (props: IUseHandlePropertyProps): IUseHandleProperty => {
-    const [_data, _setData] = useState<IProperty>(props.data);
+export const useHandleProperty = <T = any>(props: IUseHandlePropertyProps<T>): IUseHandleProperty<T> => {
+    const [_data, _setData] = useState<IProperty<T>>(props.data);
     const [_valueDirty, _setValueDirty] = useState<boolean>(false);
     const [_keyDirty, _setKeyDirty] = useState<boolean>(false);
 
@@ -56,7 +56,7 @@ export const useHandleProperty = (props: IUseHandlePropertyProps): IUseHandlePro
         props.onSave(newData);
     }
 
-    const _setValue = (value: string) => {
+    const _setValue = (value: T) => {
         _setValueDirty(true);
         _setData({
             ..._data,

@@ -1,20 +1,19 @@
+import { Accordion, AccordionDetails, AccordionSummary } from '@components/Accordion';
+import { PropertyList } from '@components/PropertyList';
 import template from '@config/property-template.json';
 import { PropertyType } from '@constants';
-import { useMenu } from '@hooks/useMenu';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { Box, IconButton, Menu, MenuItem, Stack } from '@mui/material';
 import { nanoid } from '@helpers/nanoid';
-import React, { FunctionComponent, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { addProperty, removeProperties, updateProperty } from '../../../features/PropertiesPanel/PropertiesPanelSlice';
-import { INode } from '../../../models/Node';
-import { IProperty } from '../../../models/Property';
-import { TextProperty } from './PropertyTemplate/TextProperty';
-import Typography from '@mui/material/Typography';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Accordion, AccordionDetails, AccordionSummary } from '@components/Accordion';
+import { useMenu } from '@hooks/useMenu';
+import { useProperties } from '@hooks/useProperties';
+import { IVideoPropertyData, VideoPropertySourceType } from '@models/Properties/VideoPropertyData';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import { CodeEditorProperty } from './PropertyTemplate/CodeEditorProperty';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { IconButton, Menu, MenuItem, Stack } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import React, { FunctionComponent, useMemo } from 'react';
+import { INode } from '../../models/Node';
+import { IProperty } from '../../models/Property';
 
 interface IDynamicCreatePropertiesProps {
     node: INode;
@@ -27,20 +26,20 @@ export const DynamicCreateProperties: FunctionComponent<IDynamicCreateProperties
     expanded,
     onExpanedChange
 }) => {
-    const dispatch = useDispatch();
-    const [_properties, _setProperties] = useState<IProperty[]>(node.properties);
     const { anchor, removeAnchor, setAnchor } = useMenu();
+    const { properties: _properties, saveProperty: _saveProperty, updateProperty: _updateProperty, removeProperty: _removeProperty } = useProperties({ node: node });
 
-    useEffect(() => {
-        _setProperties(node.properties);
-    }, [node])
+    const _dynamicProperties = useMemo(() => {
+        return _properties.filter(prop => prop.dynamic);
+    }, [_properties])
 
     const _onAddTextProperty = () => {
         let newProperty: IProperty = {
             id: template.basic.textInput.key.prefix.concat("_").concat(nanoid()),
             key: template.basic.textInput.key.prefix.concat("_").concat(nanoid(10)),
             value: "",
-            valueType: PropertyType.Text
+            valueType: PropertyType.Text,
+            dynamic: true
         }
         // _setProperties([..._properties, newProperty]);
         _saveProperty(newProperty);
@@ -53,7 +52,8 @@ export const DynamicCreateProperties: FunctionComponent<IDynamicCreateProperties
             id: template.advanced.codeEditor.key.prefix.concat("_").concat(nanoid()),
             key: template.advanced.codeEditor.key.prefix.concat("_").concat(nanoid(10)),
             value: "",
-            valueType: PropertyType.CodeEditor
+            valueType: PropertyType.CodeEditor,
+            dynamic: true
         }
         // _setProperties([..._properties, newProperty]);
         _saveProperty(newProperty);
@@ -61,24 +61,21 @@ export const DynamicCreateProperties: FunctionComponent<IDynamicCreateProperties
         if (!expanded) onExpanedChange(null, true);
     }
 
-    const _saveProperty = (data: IProperty) => {
-        dispatch(addProperty({ nodeId: node.id, property: data }));
-    }
-
-    const _updateProperty = (data: IProperty) => {
-        dispatch(updateProperty({ nodeId: node.id, propertyId: data.id, property: data }));
-    }
-
-    const _removeProperty = (id: string) => {
-        dispatch(removeProperties({ nodeId: node.id, propertyIds: [id] }))
-    }
-
-    const _renderProperty = (prop: IProperty): React.ReactNode => {
-        switch (prop.valueType) {
-            case PropertyType.Text: return <TextProperty key={prop.id} data={prop} onSave={_updateProperty} onRemove={_removeProperty} />
-            case PropertyType.CodeEditor: return <CodeEditorProperty key={prop.id} data={prop} onSave={_updateProperty} onRemove={_removeProperty} />
-            default: return;
+    const _onAddVideoProperty = () => {
+        let newProperty: IProperty<IVideoPropertyData> = {
+            id: template.advanced.video.key.prefix.concat("_").concat(nanoid()),
+            key: template.advanced.video.key.prefix.concat("_").concat(nanoid(10)),
+            value: {
+                sourceType: VideoPropertySourceType.Local,
+                data: null
+            },
+            valueType: PropertyType.Video,
+            dynamic: true
         }
+        // _setProperties([..._properties, newProperty]);
+        _saveProperty(newProperty);
+        removeAnchor();
+        if (!expanded) onExpanedChange(null, true);
     }
 
     return <React.Fragment>
@@ -111,16 +108,17 @@ export const DynamicCreateProperties: FunctionComponent<IDynamicCreateProperties
                             }}>
                             <MenuItem onClick={_onAddTextProperty}>Text</MenuItem>
                             <MenuItem onClick={_onAddCodeEditorProperty}>Code editor</MenuItem>
+                            <MenuItem onClick={_onAddVideoProperty}>Video</MenuItem>
                         </Menu>
                     </div>
                 </Stack>}
                 onClick={(e) => onExpanedChange(e, !expanded)}
                 aria-controls="panel2a-content"
                 id="panel2a-header">
-                <Typography style={{ fontWeight: expanded ? "bold" : "normal" }}>Additional Properties</Typography>
+                <Typography style={{ fontWeight: expanded ? "bold" : "normal" }}>Dynamic Properties</Typography>
             </AccordionSummary>
             <AccordionDetails>
-                {_properties.length > 0 ? _properties.map(_renderProperty) : "No properties found."}
+                {_dynamicProperties.length > 0 ? <PropertyList properties={_dynamicProperties} onSave={_updateProperty} onRemove={_removeProperty} /> : "No properties found."}
             </AccordionDetails>
         </Accordion >
 

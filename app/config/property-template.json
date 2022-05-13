@@ -11,6 +11,15 @@
             "key": {
                 "prefix": "codeEditor"
             }
+        },
+        "video": {
+            "key": {
+                "prefix": "video"
+            },
+            "allowTypes": [
+                "video/mp4",
+                "video/AV1"
+            ]
         }
     }
 }

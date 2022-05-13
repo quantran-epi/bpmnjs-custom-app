@@ -6,4 +6,5 @@ export interface IBasePropertyTemplateProps<T = any> {
     onRemove?: (id: string) => void;
     readonly?: boolean;
     autoExpand?: boolean;
+    dynamic?: boolean;
 }

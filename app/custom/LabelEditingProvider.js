@@ -258,7 +258,7 @@ LabelEditingProvider.prototype.getEditingBBox = function (element) {
 
     // internal labels for tasks and collapsed call activities,
     // sub processes and participants
-    if (isAny(element, ['custom:CustomShape']) || isAny(element, ['bpmn:Task', 'bpmn:CallActivity']) ||
+    if (isAny(element, ['custom:Web']) || isAny(element, ['bpmn:Task', 'bpmn:CallActivity']) ||
         isCollapsedPool(element) ||
         isCollapsedSubProcess(element)) {
 

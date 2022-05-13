@@ -1,4 +1,7 @@
 import { Accordion, AccordionDetails, AccordionSummary } from '@components/Accordion';
+import { WebProperties } from '@components/DiagramElement/WebElement/WebProperties';
+import { ELEMENT_TYPES } from '@constants';
+import { INode } from '@models/Node';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { AppBar, IconButton, Paper, Stack, Toolbar } from '@mui/material';
@@ -9,7 +12,7 @@ import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
 import { AppContext } from '../../AppContext';
 import { selectedNode } from '../../features/PropertiesPanel/PropertiesPanelSlice';
-import { DynamicCreateProperties } from '../Block/DynamicCreateProperties';
+import { DynamicCreateProperties } from '../DynamicCreateProperties';
 import './DiagramPropertiesPanel.scss';
 
 export const DiagramPropertiesPanel = () => {
@@ -26,6 +29,12 @@ export const DiagramPropertiesPanel = () => {
         (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
             setExpanded(isExpanded ? panel : false);
         };
+
+    const _renderElementProperties = (node: INode) => {
+        switch (node.type) {
+            case ELEMENT_TYPES.WEB: return <WebProperties data={node} />
+        }
+    }
 
     return (
         <Paper variant="outlined" square className="properties-panel-parent" id="js-properties-panel">
@@ -48,13 +57,10 @@ export const DiagramPropertiesPanel = () => {
                         aria-controls="panel1a-content"
                         id="panel1a-header"
                     >
-                        <Typography style={{ fontWeight: expanded === accordionKeys.basicProperties ? "bold" : "normal" }}>Accordion 1</Typography>
+                        <Typography style={{ fontWeight: expanded === accordionKeys.basicProperties ? "bold" : "normal" }}>Basic Properties</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                        <Typography>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                            malesuada lacus ex, sit amet blandit leo lobortis eget.
-                        </Typography>
+                        {_renderElementProperties(_selectedNode)}
                     </AccordionDetails>
                 </Accordion>
                 <DynamicCreateProperties

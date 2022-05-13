@@ -3,23 +3,27 @@ import { useHandleProperty } from '@hooks/useHandleProperty';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import { FormControl, IconButton, InputLabel, Stack, Typography } from '@mui/material';
-import React, { FunctionComponent } from 'react';
-import { Form } from 'react-bootstrap';
-import { TextInput } from '../../../../Form/Input/';
+import { IconButton, Stack, Typography } from '@mui/material';
+import React, { FunctionComponent, useEffect, useRef } from 'react';
+import { TextInput } from '../../../Form/Input';
 import { IBasePropertyTemplateProps } from '../../DynamicCreateProperties.types';
+import CodeMirror from 'codemirror';
+import 'codemirror/lib/codemirror.css';
+import './CodeEditorProperty.scss';
 
-interface ITextPropertyProps extends IBasePropertyTemplateProps<string> {
+interface ICodeEditorPropertyProps extends IBasePropertyTemplateProps<string> {
+
 }
 
-export const TextProperty: FunctionComponent<ITextPropertyProps> = ({
+export const CodeEditorProperty: FunctionComponent<ICodeEditorPropertyProps> = ({
     data,
     onSave,
     onRemove,
     readonly = false,
     autoExpand = false
 }) => {
-    const { data: _data, valueDirty, keyDirty, setKey, setValue, remove, save } = useHandleProperty({ data, onRemove, onSave });
+    const { data: _data, valueDirtyRef, keyDirtyRef, setKey, setValue, saveByRef, removeByRef } = useHandleProperty({ data, onRemove, onSave });
+    const inputRef = useRef(null);
     const [expanded, setExpanded] = React.useState<string | false>(false);
     const handleChange =
         (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
@@ -27,20 +31,45 @@ export const TextProperty: FunctionComponent<ITextPropertyProps> = ({
         };
 
     const _onValueTextBoxBlur = () => {
-        if (valueDirty) save();
+        if (valueDirtyRef.current) saveByRef();
     }
 
     const _onValueTextBoxEnter = () => {
-        if (valueDirty) save();
+        if (valueDirtyRef.current) saveByRef();
     }
 
     const _onKeyTextBoxBlur = () => {
-        if (keyDirty) save();
+        if (keyDirtyRef.current) saveByRef();
     }
 
     const _onKeyTextBoxEnter = () => {
-        if (keyDirty) save();
+        if (keyDirtyRef.current) saveByRef();
     }
+
+    const _onEditorInputChange = (instance: CodeMirror, changeObj: object) => {
+        setValue(instance.getValue());
+    }
+
+    const _onEditorInputBlur = (instance: CodeMirror, changeObj: object) => {
+        _onValueTextBoxBlur();
+    }
+
+    useEffect(() => {
+        if (!inputRef.current) return;
+        let editor = CodeMirror.fromTextArea(inputRef.current, {
+            mode: "javascript",
+            lineNumbers: true,
+        });
+        editor.getDoc().setValue(_data.value);
+
+        editor.on('change', _onEditorInputChange);
+        editor.on('blur', _onEditorInputBlur);
+
+        return () => {
+            editor.off('change', _onEditorInputChange);
+            editor.off('blur', _onEditorInputBlur);
+        }
+    }, [inputRef])
 
     return <React.Fragment>
         <Accordion expanded={expanded === 'panel1'} style={{ marginLeft: -15, marginRight: -15 }}>
@@ -51,7 +80,7 @@ export const TextProperty: FunctionComponent<ITextPropertyProps> = ({
                         <IconButton onClick={(e) => handleChange('panel1')(e, true)}><ExpandMore /></IconButton>}
                 </Stack>}
                 toolbar={<Stack direction="row" spacing={2} alignItems="center">
-                    <IconButton color="error" onClick={remove}>
+                    <IconButton color="error" onClick={removeByRef}>
                         <DeleteIcon />
                     </IconButton>
                 </Stack>} aria-controls="panel1d-content" id="panel1d-header">
@@ -70,7 +99,8 @@ export const TextProperty: FunctionComponent<ITextPropertyProps> = ({
                         onChangeText={setKey}
                         onBlur={_onKeyTextBoxBlur}
                         onEnter={_onKeyTextBoxEnter} />
-                    <TextInput
+                    {/* <TextInput
+                        ref={inputRef}
                         size="small"
                         label="Value"
                         type="text"
@@ -79,7 +109,10 @@ export const TextProperty: FunctionComponent<ITextPropertyProps> = ({
                         value={_data.value}
                         onChangeText={setValue}
                         onBlur={_onValueTextBoxBlur}
-                        onEnter={_onValueTextBoxEnter} />
+                        onEnter={_onValueTextBoxEnter} /> */}
+                    <div style={{ border: "1px solid rgba(0,0,0,0.5)", borderRadius: 4 }}>
+                        <textarea ref={inputRef} />
+                    </div>
                 </Stack>
             </AccordionDetails>
         </Accordion>
