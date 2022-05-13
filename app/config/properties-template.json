@@ -5,5 +5,12 @@
                 "type": "Text"
             }
         }
+    },
+    "click": {
+        "properties": {
+            "selector": {
+                "type": "Text"
+            }
+        }
     }
 }

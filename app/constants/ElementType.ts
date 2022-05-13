@@ -7,5 +7,6 @@ export const ELEMENT_TYPES = {
     WEB: "custom:Web",
     CLICK: "custom:Click",
     INPUT: "custom:Input",
-    EXTRACT_TEXT_VALUE: "custom:ExtractTextValue"
+    EXTRACT_TEXT_VALUE: "custom:ExtractTextValue",
+    SLEEP: "custom:Sleep"
 }

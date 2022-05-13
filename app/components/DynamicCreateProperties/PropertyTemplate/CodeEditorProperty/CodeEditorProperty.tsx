@@ -20,7 +20,8 @@ export const CodeEditorProperty: FunctionComponent<ICodeEditorPropertyProps> = (
     onSave,
     onRemove,
     readonly = false,
-    autoExpand = false
+    autoExpand = false,
+    allowDelete = true
 }) => {
     const { data: _data, valueDirtyRef, keyDirtyRef, setKey, setValue, saveByRef, removeByRef } = useHandleProperty({ data, onRemove, onSave });
     const inputRef = useRef(null);
@@ -80,9 +81,9 @@ export const CodeEditorProperty: FunctionComponent<ICodeEditorPropertyProps> = (
                         <IconButton onClick={(e) => handleChange('panel1')(e, true)}><ExpandMore /></IconButton>}
                 </Stack>}
                 toolbar={<Stack direction="row" spacing={2} alignItems="center">
-                    <IconButton color="error" onClick={removeByRef}>
+                    {allowDelete && <IconButton color="error" onClick={removeByRef}>
                         <DeleteIcon />
-                    </IconButton>
+                    </IconButton>}
                 </Stack>} aria-controls="panel1d-content" id="panel1d-header">
                 <Typography style={{ marginLeft: -10 }}>{_data.key}</Typography>
             </AccordionSummary>

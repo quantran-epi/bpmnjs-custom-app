@@ -3,6 +3,7 @@ import {
 } from 'min-dash';
 import { getDi } from 'bpmn-js/lib/util/ModelUtil';
 import { webElementSvgUrl } from '@components/DiagramElement/WebElement/icon';
+import { clickElementSvgUrl } from '@components/DiagramElement/ClickElement/icon';
 
 /**
  * A palette provider for BPMN 2.0 elements.
@@ -107,6 +108,14 @@ CustomPaletteProvider.prototype.getPaletteEntries = function (element) {
         create.start(event, webShape);
     }
 
+    function createClick(event) {
+        var clickShape = elementFactory.create(
+            'shape', { type: 'custom:Click' }
+        );
+
+        create.start(event, clickShape);
+    }
+
     assign(actions, {
         'hand-tool': {
             group: 'tools',
@@ -209,6 +218,15 @@ CustomPaletteProvider.prototype.getPaletteEntries = function (element) {
             action: {
                 dragstart: createWeb,
                 click: createWeb
+            }
+        },
+        'create.click': {
+            group: 'activity',
+            imageUrl: clickElementSvgUrl,
+            title: translate('Create click'),
+            action: {
+                dragstart: createClick,
+                click: createClick
             }
         },
     });

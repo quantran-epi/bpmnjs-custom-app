@@ -12,6 +12,13 @@
                 "bpmn:FlowNode",
                 "bpmn:InteractionNode"
             ]
+        },
+        {
+            "name": "Click",
+            "superClass": [
+                "bpmn:FlowNode",
+                "bpmn:InteractionNode"
+            ]
         }
     ],
     "emumerations": [],

@@ -1,4 +1,5 @@
 import { Accordion, AccordionDetails, AccordionSummary } from '@components/Accordion';
+import { ClickProperties } from '@components/DiagramElement/ClickElement/ClickElement';
 import { WebProperties } from '@components/DiagramElement/WebElement/WebProperties';
 import { ELEMENT_TYPES } from '@constants';
 import { INode } from '@models/Node';
@@ -33,6 +34,7 @@ export const DiagramPropertiesPanel = () => {
     const _renderElementProperties = (node: INode) => {
         switch (node.type) {
             case ELEMENT_TYPES.WEB: return <WebProperties data={node} />
+            case ELEMENT_TYPES.CLICK: return <ClickProperties data={node} />
         }
     }
 

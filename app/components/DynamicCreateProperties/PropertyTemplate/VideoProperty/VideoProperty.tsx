@@ -19,6 +19,7 @@ export const VideoProperty: FunctionComponent<IVideoPropertyProps> = ({
     onRemove,
     readonly = false,
     autoExpand = false,
+    allowDelete = true
 }) => {
     const { data: _data, valueDirty, keyDirty, setKey, setValue, remove, save } = useHandleProperty<IVideoPropertyData>({ data, onRemove, onSave });
     const [expanded, setExpanded] = React.useState<string | false>(false);
@@ -74,9 +75,9 @@ export const VideoProperty: FunctionComponent<IVideoPropertyProps> = ({
                         <IconButton onClick={(e) => handleChange('panel1')(e, true)}><ExpandMore /></IconButton>}
                 </Stack>}
                 toolbar={<Stack direction="row" spacing={2} alignItems="center">
-                    <IconButton color="error" onClick={remove}>
+                    {allowDelete && <IconButton color="error" onClick={remove}>
                         <DeleteIcon />
-                    </IconButton>
+                    </IconButton>}
                 </Stack>} aria-controls="panel1d-content" id="panel1d-header">
                 <Typography style={{ marginLeft: -10 }}>{_data.key}</Typography>
             </AccordionSummary>

@@ -18,11 +18,12 @@ export const PropertyList: FunctionComponent<IPropertyListProps> = ({
     onRemove
 }) => {
 
-    const _renderProperty = (prop: IProperty): React.ReactNode => {debugger
+    const _renderProperty = (prop: IProperty): React.ReactNode => {
+        debugger
         switch (prop.valueType) {
-            case PropertyType.Text: return <TextProperty key={prop.id} data={prop} onSave={onSave} onRemove={onRemove} />
-            case PropertyType.CodeEditor: return <CodeEditorProperty key={prop.id} data={prop} onSave={onSave} onRemove={onRemove} />
-            case PropertyType.Video: return <VideoProperty key={prop.id} data={prop} onSave={onSave} onRemove={onRemove} />
+            case PropertyType.Text: return <TextProperty allowDelete={prop.dynamic} key={prop.id} data={prop} onSave={onSave} onRemove={onRemove} />
+            case PropertyType.CodeEditor: return <CodeEditorProperty allowDelete={prop.dynamic} key={prop.id} data={prop} onSave={onSave} onRemove={onRemove} />
+            case PropertyType.Video: return <VideoProperty allowDelete={prop.dynamic} key={prop.id} data={prop} onSave={onSave} onRemove={onRemove} />
             default: return;
         }
     }
