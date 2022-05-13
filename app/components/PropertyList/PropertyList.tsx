@@ -1,4 +1,5 @@
 import { CodeEditorProperty } from '@components/DynamicCreateProperties/PropertyTemplate/CodeEditorProperty';
+import { MultilineTextProperty } from '@components/DynamicCreateProperties/PropertyTemplate/MultilineTextProperty';
 import { TextProperty } from '@components/DynamicCreateProperties/PropertyTemplate/TextProperty';
 import { VideoProperty } from '@components/DynamicCreateProperties/PropertyTemplate/VideoProperty';
 import { PropertyType } from '@constants';
@@ -19,9 +20,9 @@ export const PropertyList: FunctionComponent<IPropertyListProps> = ({
 }) => {
 
     const _renderProperty = (prop: IProperty): React.ReactNode => {
-        debugger
         switch (prop.valueType) {
             case PropertyType.Text: return <TextProperty allowDelete={prop.dynamic} key={prop.id} data={prop} onSave={onSave} onRemove={onRemove} />
+            case PropertyType.MultilineText: return <MultilineTextProperty allowDelete={prop.dynamic} key={prop.id} data={prop} onSave={onSave} onRemove={onRemove} />
             case PropertyType.CodeEditor: return <CodeEditorProperty allowDelete={prop.dynamic} key={prop.id} data={prop} onSave={onSave} onRemove={onRemove} />
             case PropertyType.Video: return <VideoProperty allowDelete={prop.dynamic} key={prop.id} data={prop} onSave={onSave} onRemove={onRemove} />
             default: return;

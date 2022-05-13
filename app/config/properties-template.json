@@ -9,7 +9,7 @@
     "click": {
         "properties": {
             "selector": {
-                "type": "Text"
+                "type": "MultilineText"
             }
         }
     }

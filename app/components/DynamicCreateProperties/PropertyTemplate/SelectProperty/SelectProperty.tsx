@@ -3,25 +3,29 @@ import { useHandleProperty } from '@hooks/useHandleProperty';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import { IconButton, Stack, Typography } from '@mui/material';
+import { FormControl, IconButton, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, Typography } from '@mui/material';
 import React, { FunctionComponent } from 'react';
+import { Form } from 'react-bootstrap';
 import { TextInput } from '../../../Form/Input';
 import { IBasePropertyTemplateProps } from '../../DynamicCreateProperties.types';
 
-export interface ITextPropertyProps extends IBasePropertyTemplateProps<string> {
-    multiline?: boolean;
-    rows?: number;
+interface ISelectItem {
+    value: string;
+    label: string;
 }
 
-export const TextProperty: FunctionComponent<ITextPropertyProps> = ({
+interface ISelectPropertyProps extends IBasePropertyTemplateProps<string> {
+    items: ISelectItem[];
+}
+
+export const SelectProperty: FunctionComponent<ISelectPropertyProps> = ({
     data,
     onSave,
     onRemove,
     readonly = false,
     autoExpand = false,
     allowDelete = true,
-    multiline = false,
-    rows = 5
+    items
 }) => {
     const { data: _data, valueDirty, keyDirty, setKey, setValue, remove, save } = useHandleProperty({ data, onRemove, onSave });
     const [expanded, setExpanded] = React.useState<string | false>(false);
@@ -30,11 +34,7 @@ export const TextProperty: FunctionComponent<ITextPropertyProps> = ({
             setExpanded(isExpanded ? panel : false);
         };
 
-    const _onValueTextBoxBlur = () => {
-        if (valueDirty) save();
-    }
-
-    const _onValueTextBoxEnter = () => {
+    const _onValueSelectBlur = () => {
         if (valueDirty) save();
     }
 
@@ -44,6 +44,10 @@ export const TextProperty: FunctionComponent<ITextPropertyProps> = ({
 
     const _onKeyTextBoxEnter = () => {
         if (keyDirty) save();
+    }
+
+    const _onValueChange = (event: SelectChangeEvent<string>) => {
+        setValue(event.target.value);
     }
 
     return <React.Fragment>
@@ -75,18 +79,20 @@ export const TextProperty: FunctionComponent<ITextPropertyProps> = ({
                         onBlur={_onKeyTextBoxBlur}
                         onEnter={_onKeyTextBoxEnter}
                         disabled={!_data.dynamic} />
-                    <TextInput
-                        multiline={multiline}
-                        rows={rows}
-                        size="small"
-                        label="Value"
-                        type="text"
-                        placeholder="Enter value"
-                        aria-label="Enter value"
-                        value={_data.value}
-                        onChangeText={setValue}
-                        onBlur={_onValueTextBoxBlur}
-                        onEnter={_onValueTextBoxEnter} />
+                    <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-label">Value</InputLabel>
+                        <Select
+                            size="small"
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={_data.value}
+                            label="Value"
+                            onChange={_onValueChange}
+                            onBlur={_onValueSelectBlur}
+                        >
+                            {items.map(item => <MenuItem value={item.value}>{item.label}</MenuItem>)}
+                        </Select>
+                    </FormControl>
                 </Stack>
             </AccordionDetails>
         </Accordion>
