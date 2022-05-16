@@ -33,6 +33,13 @@
                 "bpmn:FlowNode",
                 "bpmn:InteractionNode"
             ]
+        },
+        {
+            "name": "ExtractTextValue",
+            "superClass": [
+                "bpmn:FlowNode",
+                "bpmn:InteractionNode"
+            ]
         }
     ],
     "emumerations": [],

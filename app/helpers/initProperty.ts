@@ -68,11 +68,18 @@ export const initProperties = (elementId: string, elementType: string) => {
         })
     }
 
+    const _getExtractTextValueProperties = (elementId: string): IProperty[] => {
+        return Object.keys(elementTemplate.extractTextValue.properties).map(key => {
+            return getProperty(elementId, key, elementTemplate.extractTextValue.properties[key].type);
+        })
+    }
+
     switch (elementType) {
         case ELEMENT_TYPES.WEB: return _getWebProperties(elementId);
         case ELEMENT_TYPES.CLICK: return _getClickProperties(elementId);
         case ELEMENT_TYPES.INPUT: return _getInputProperties(elementId);
         case ELEMENT_TYPES.SLEEP: return _getSleepProperties(elementId);
+        case ELEMENT_TYPES.EXTRACT_TEXT_VALUE: return _getExtractTextValueProperties(elementId);
         default: return [];
     }
 }

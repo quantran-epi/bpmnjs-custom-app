@@ -1,13 +1,11 @@
-import { Accordion, AccordionDetails, AccordionSummary } from '@components/Accordion';
 import { ClickProperties } from '@components/DiagramElement/ClickElement/ClickElement';
+import { ExtractTextValueProperties } from '@components/DiagramElement/ExtractTextValueElement/ExtractTextValueElement';
 import { InputProperties } from '@components/DiagramElement/InputElement/InputElement';
 import { SleepProperties } from '@components/DiagramElement/SleepElement/SleepElement';
 import { WebProperties } from '@components/DiagramElement/WebElement/WebProperties';
 import { ELEMENT_TYPES } from '@constants';
 import { INode } from '@models/Node';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import { AppBar, IconButton, Paper, Stack, Toolbar } from '@mui/material';
+import { AppBar, Paper, Toolbar } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { Box } from '@mui/system';
 import React, { useContext } from 'react';
@@ -15,30 +13,19 @@ import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
 import { AppContext } from '../../AppContext';
 import { selectedNode } from '../../features/PropertiesPanel/PropertiesPanelSlice';
-import { DynamicCreateProperties } from '../DynamicCreateProperties';
 import './DiagramPropertiesPanel.scss';
 
 export const DiagramPropertiesPanel = () => {
     const _selectedNode = useSelector(selectedNode);
     const { modeler } = useContext(AppContext);
-    const accordionKeys = {
-        basicProperties: "basicProperties",
-        additionalProperties: "additionalProperties"
-    }
-
-    const [expanded, setExpanded] = React.useState<string | false>(accordionKeys.basicProperties);
-
-    const handleChange =
-        (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
-            setExpanded(isExpanded ? panel : false);
-        };
-
+   
     const _renderElementProperties = (node: INode) => {
         switch (node.type) {
             case ELEMENT_TYPES.WEB: return <WebProperties data={node} />
             case ELEMENT_TYPES.CLICK: return <ClickProperties data={node} />
             case ELEMENT_TYPES.INPUT: return <InputProperties data={node} />
             case ELEMENT_TYPES.SLEEP: return <SleepProperties data={node} />
+            case ELEMENT_TYPES.EXTRACT_TEXT_VALUE: return <ExtractTextValueProperties data={node} />
         }
     }
 
@@ -54,25 +41,11 @@ export const DiagramPropertiesPanel = () => {
                 </Toolbar>
             </AppBar>
             {_selectedNode && <Box style={{ padding: 0 }}>
-                <Accordion expanded={expanded === accordionKeys.basicProperties} onChange={handleChange(accordionKeys.basicProperties)}>
-                    <AccordionSummary
-                        expandButton={<Stack direction="row" spacing={2} alignItems="center">
-                            {expanded ? <IconButton onClick={(e) => handleChange(accordionKeys.basicProperties)(e, false)}><ExpandLess /></IconButton> :
-                                <IconButton onClick={(e) => handleChange(accordionKeys.basicProperties)(e, true)}><ExpandMore /></IconButton>}
-                        </Stack>}
-                        aria-controls="panel1a-content"
-                        id="panel1a-header"
-                    >
-                        <Typography style={{ fontWeight: expanded === accordionKeys.basicProperties ? "bold" : "normal" }}>Basic Properties</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        {_renderElementProperties(_selectedNode)}
-                    </AccordionDetails>
-                </Accordion>
-                <DynamicCreateProperties
+                {_renderElementProperties(_selectedNode)}
+                {/* <DynamicCreateProperties
                     expanded={expanded === accordionKeys.additionalProperties}
                     onExpanedChange={handleChange(accordionKeys.additionalProperties)}
-                    node={_selectedNode} />
+                    node={_selectedNode} /> */}
             </Box >}
         </Paper >
     )

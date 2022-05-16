@@ -6,6 +6,7 @@ import { webElementSvgUrl } from '@components/DiagramElement/WebElement/icon';
 import { clickElementSvgUrl } from '@components/DiagramElement/ClickElement/icon';
 import { inputElementSvgUrl } from '@components/DiagramElement/InputElement/icon';
 import { sleepElementSvgUrl } from '@components/DiagramElement/SleepElement/icon';
+import { extractTextValueElementSvgUrl } from '@components/DiagramElement/ExtractTextValueElement/icon';
 
 /**
  * A palette provider for BPMN 2.0 elements.
@@ -132,6 +133,14 @@ CustomPaletteProvider.prototype.getPaletteEntries = function (element) {
         );
 
         create.start(event, sleepShape);
+    }
+
+    function createExtractTextValue(event) {
+        var extractTextValueShape = elementFactory.create(
+            'shape', { type: 'custom:ExtractTextValue' }
+        );
+
+        create.start(event, extractTextValueShape);
     }
 
     assign(actions, {
@@ -265,6 +274,15 @@ CustomPaletteProvider.prototype.getPaletteEntries = function (element) {
                 click: createSleep
             }
         },
+        'create.extractTextValue': {
+            group: 'activity',
+            imageUrl: extractTextValueElementSvgUrl,
+            title: translate('Create ExtractTextValue'),
+            action: {
+                dragstart: createExtractTextValue,
+                click: createExtractTextValue
+            }
+        }, 
     });
 
     return actions;

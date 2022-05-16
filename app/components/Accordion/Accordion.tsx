@@ -20,9 +20,11 @@ interface ICustomAccordionProps extends AccordionProps {
 
 export const Accordion = styled(({
     bottomSeparator,
+    className,
+    style,
     ...props
 }: ICustomAccordionProps) => (
-    <div>
+    <div className={className} style={style}>
         <MuiAccordion disableGutters elevation={0} square {...props} />
         {bottomSeparator && <Divider />}
     </div>

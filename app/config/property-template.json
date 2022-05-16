@@ -4,6 +4,16 @@
             "key": {
                 "prefix": "textInput"
             }
+        },
+        "multilineTextInput": {
+            "key": {
+                "prefix": "multilineTextInput"
+            }
+        },
+        "numberInput": {
+            "key": {
+                "prefix": "numberInput"
+            }
         }
     },
     "advanced": {

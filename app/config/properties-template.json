@@ -26,5 +26,8 @@
                 "type": "Number"
             }
         }
+    },
+    "extractTextValue": {
+        "properties": {}
     }
 }
