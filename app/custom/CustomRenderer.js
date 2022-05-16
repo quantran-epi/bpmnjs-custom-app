@@ -26,6 +26,8 @@ import { is } from 'bpmn-js/lib/util/ModelUtil';
 import { isAny } from 'bpmn-js/lib/features/modeling/util/ModelingUtil';
 import { webElementSvg } from '@components/DiagramElement/WebElement/icon';
 import { clickElementSvg } from '@components/DiagramElement/ClickElement/icon';
+import { inputElementSvg } from '@components/DiagramElement/InputElement/icon';
+import { sleepElementSvg } from '@components/DiagramElement/SleepElement/icon';
 
 const HIGH_PRIORITY = 1500,
     TASK_BORDER_RADIUS = 2;
@@ -46,7 +48,7 @@ export default class CustomRenderer extends BaseRenderer {
     canRender(element) {
 
         // only render tasks and events (ignore labels)
-        return isAny(element, ['custom:Web', 'custom:Click']) && !element.labelTarget;
+        return isAny(element, ['custom:Web', 'custom:Click', 'custom:Input', 'custom:Sleep']) && !element.labelTarget;
     }
 
     drawShape(parentNode, element) {
@@ -76,6 +78,48 @@ export default class CustomRenderer extends BaseRenderer {
         if (is(element, 'custom:Click')) {
             const iconWrapper = svgCreate("g");
             const icon = getSvgFromString(clickElementSvg);
+            svgAppend(iconWrapper, icon);
+            svgAppend(parentNode, iconWrapper);
+
+            svgAttr(iconWrapper, {
+                transform: `translate(0, ${element.height - 40})`
+            });
+
+            let semantic = getSemantic(element);
+
+            this.renderLabel(parentNode, semantic.name, {
+                box: element,
+                align: 'center-top',
+                padding: 5,
+            })
+
+            return rect;
+        }
+
+        if (is(element, 'custom:Input')) {
+            const iconWrapper = svgCreate("g");
+            const icon = getSvgFromString(inputElementSvg);
+            svgAppend(iconWrapper, icon);
+            svgAppend(parentNode, iconWrapper);
+
+            svgAttr(iconWrapper, {
+                transform: `translate(0, ${element.height - 40})`
+            });
+
+            let semantic = getSemantic(element);
+
+            this.renderLabel(parentNode, semantic.name, {
+                box: element,
+                align: 'center-top',
+                padding: 5,
+            })
+
+            return rect;
+        }
+
+        if (is(element, 'custom:Sleep')) {
+            const iconWrapper = svgCreate("g");
+            const icon = getSvgFromString(sleepElementSvg);
             svgAppend(iconWrapper, icon);
             svgAppend(parentNode, iconWrapper);
 

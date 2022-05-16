@@ -11,6 +11,7 @@ import { IBasePropertyTemplateProps } from '../../DynamicCreateProperties.types'
 export interface ITextPropertyProps extends IBasePropertyTemplateProps<string> {
     multiline?: boolean;
     rows?: number;
+    type?: React.InputHTMLAttributes<unknown>['type'];
 }
 
 export const TextProperty: FunctionComponent<ITextPropertyProps> = ({
@@ -21,7 +22,8 @@ export const TextProperty: FunctionComponent<ITextPropertyProps> = ({
     autoExpand = false,
     allowDelete = true,
     multiline = false,
-    rows = 5
+    rows = 5,
+    type = "text"
 }) => {
     const { data: _data, valueDirty, keyDirty, setKey, setValue, remove, save } = useHandleProperty({ data, onRemove, onSave });
     const [expanded, setExpanded] = React.useState<string | false>(false);
@@ -80,7 +82,7 @@ export const TextProperty: FunctionComponent<ITextPropertyProps> = ({
                         rows={rows}
                         size="small"
                         label="Value"
-                        type="text"
+                        type={type}
                         placeholder="Enter value"
                         aria-label="Enter value"
                         value={_data.value}

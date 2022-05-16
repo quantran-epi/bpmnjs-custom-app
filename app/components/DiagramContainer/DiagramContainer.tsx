@@ -48,7 +48,7 @@ export const DiagramContainer = () => {
             _autoCreateName(e.context.shape);
         })
 
-        eventBus.on('shape.added', function (e) {
+        eventBus.on('shape.added', function (e) {debugger
             console.log('shape added', e);
             if (nodeTypeBlaclist.includes(e.element.type)) return;
             dispatch(addNode({

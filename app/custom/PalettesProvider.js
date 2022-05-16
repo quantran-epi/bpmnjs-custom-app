@@ -4,6 +4,8 @@ import {
 import { getDi } from 'bpmn-js/lib/util/ModelUtil';
 import { webElementSvgUrl } from '@components/DiagramElement/WebElement/icon';
 import { clickElementSvgUrl } from '@components/DiagramElement/ClickElement/icon';
+import { inputElementSvgUrl } from '@components/DiagramElement/InputElement/icon';
+import { sleepElementSvgUrl } from '@components/DiagramElement/SleepElement/icon';
 
 /**
  * A palette provider for BPMN 2.0 elements.
@@ -114,6 +116,22 @@ CustomPaletteProvider.prototype.getPaletteEntries = function (element) {
         );
 
         create.start(event, clickShape);
+    }
+
+    function createInput(event) {
+        var inputShape = elementFactory.create(
+            'shape', { type: 'custom:Input' }
+        );
+
+        create.start(event, inputShape);
+    }
+
+    function createSleep(event) {
+        var sleepShape = elementFactory.create(
+            'shape', { type: 'custom:Sleep' }
+        );
+
+        create.start(event, sleepShape);
     }
 
     assign(actions, {
@@ -227,6 +245,24 @@ CustomPaletteProvider.prototype.getPaletteEntries = function (element) {
             action: {
                 dragstart: createClick,
                 click: createClick
+            }
+        },
+        'create.input': {
+            group: 'activity',
+            imageUrl: inputElementSvgUrl,
+            title: translate('Create input'),
+            action: {
+                dragstart: createInput,
+                click: createInput
+            }
+        },
+        'create.sleep': {
+            group: 'activity',
+            imageUrl: sleepElementSvgUrl,
+            title: translate('Create sleep'),
+            action: {
+                dragstart: createSleep,
+                click: createSleep
             }
         },
     });

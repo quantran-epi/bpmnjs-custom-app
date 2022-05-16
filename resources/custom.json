@@ -19,6 +19,20 @@
                 "bpmn:FlowNode",
                 "bpmn:InteractionNode"
             ]
+        },
+        {
+            "name": "Input",
+            "superClass": [
+                "bpmn:FlowNode",
+                "bpmn:InteractionNode"
+            ]
+        },
+        {
+            "name": "Sleep",
+            "superClass": [
+                "bpmn:FlowNode",
+                "bpmn:InteractionNode"
+            ]
         }
     ],
     "emumerations": [],

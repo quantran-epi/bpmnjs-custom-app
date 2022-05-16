@@ -7,7 +7,7 @@ interface ITextInputProps extends Omit<TextFieldProps, "onChange" | "onBlur"> {
     onEnter?: () => void;
 }
 
-export const TextInput: FunctionComponent<ITextInputProps> = React.forwardRef(({
+export const TextInput = React.forwardRef<HTMLDivElement, ITextInputProps>(({
     onChangeText,
     onBlur,
     onEnter,

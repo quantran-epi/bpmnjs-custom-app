@@ -25,6 +25,7 @@ export const PropertyList: FunctionComponent<IPropertyListProps> = ({
             case PropertyType.MultilineText: return <MultilineTextProperty allowDelete={prop.dynamic} key={prop.id} data={prop} onSave={onSave} onRemove={onRemove} />
             case PropertyType.CodeEditor: return <CodeEditorProperty allowDelete={prop.dynamic} key={prop.id} data={prop} onSave={onSave} onRemove={onRemove} />
             case PropertyType.Video: return <VideoProperty allowDelete={prop.dynamic} key={prop.id} data={prop} onSave={onSave} onRemove={onRemove} />
+            case PropertyType.Number: return <TextProperty type="number" allowDelete={prop.dynamic} key={prop.id} data={prop} onSave={onSave} onRemove={onRemove} />
             default: return;
         }
     }
