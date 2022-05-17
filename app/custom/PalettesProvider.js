@@ -7,6 +7,7 @@ import { clickElementSvgUrl } from '@components/DiagramElement/ClickElement/icon
 import { inputElementSvgUrl } from '@components/DiagramElement/InputElement/icon';
 import { sleepElementSvgUrl } from '@components/DiagramElement/SleepElement/icon';
 import { extractTextValueElementSvgUrl } from '@components/DiagramElement/ExtractTextValueElement/icon';
+import { expandedSubProcessElementSvgUrl } from '@components/DiagramElement/ExpandedSubProcessElement/icon';
 
 /**
  * A palette provider for BPMN 2.0 elements.
@@ -143,6 +144,14 @@ CustomPaletteProvider.prototype.getPaletteEntries = function (element) {
         create.start(event, extractTextValueShape);
     }
 
+    function createRepeatProcess(event) {
+        var repeatProcessShape = elementFactory.create(
+            'shape', { type: 'custom:RepeatProcess' }
+        );
+
+        create.start(event, repeatProcessShape);
+    }
+
     assign(actions, {
         'hand-tool': {
             group: 'tools',
@@ -188,18 +197,18 @@ CustomPaletteProvider.prototype.getPaletteEntries = function (element) {
             group: 'tools',
             separator: true
         },
-        // 'create.start-event': createAction(
-        //     'bpmn:StartEvent', 'event', 'bpmn-icon-start-event-none',
-        //     translate('Create StartEvent')
-        // ),
+        'create.start-event': createAction(
+            'bpmn:StartEvent', 'event', 'bpmn-icon-start-event-none',
+            translate('Create StartEvent')
+        ),
         // 'create.intermediate-event': createAction(
         //     'bpmn:IntermediateThrowEvent', 'event', 'bpmn-icon-intermediate-event-none',
         //     translate('Create Intermediate/Boundary Event')
         // ),
-        // 'create.end-event': createAction(
-        //     'bpmn:EndEvent', 'event', 'bpmn-icon-end-event-none',
-        //     translate('Create EndEvent')
-        // ),
+        'create.end-event': createAction(
+            'bpmn:EndEvent', 'event', 'bpmn-icon-end-event-none',
+            translate('Create EndEvent')
+        ),
         // 'create.exclusive-gateway': createAction(
         //     'bpmn:ExclusiveGateway', 'gateway', 'bpmn-icon-gateway-none',
         //     translate('Create Gateway')
@@ -216,15 +225,15 @@ CustomPaletteProvider.prototype.getPaletteEntries = function (element) {
         //     'bpmn:DataStoreReference', 'data-store', 'bpmn-icon-data-store',
         //     translate('Create DataStoreReference')
         // ),
-        // 'create.subprocess-expanded': {
-        //     group: 'activity',
-        //     className: 'bpmn-icon-subprocess-expanded',
-        //     title: translate('Create expanded SubProcess'),
-        //     action: {
-        //         dragstart: createSubprocess,
-        //         click: createSubprocess
-        //     }
-        // },
+        'create.subprocess-expanded': {
+            group: 'activity',
+            imageUrl: expandedSubProcessElementSvgUrl,
+            title: translate('Create expanded SubProcess'),
+            action: {
+                dragstart: createSubprocess,
+                click: createSubprocess
+            }
+        },
         // 'create.participant-expanded': {
         //     group: 'collaboration',
         //     className: 'bpmn-icon-participant',
@@ -282,7 +291,7 @@ CustomPaletteProvider.prototype.getPaletteEntries = function (element) {
                 dragstart: createExtractTextValue,
                 click: createExtractTextValue
             }
-        }, 
+        }
     });
 
     return actions;

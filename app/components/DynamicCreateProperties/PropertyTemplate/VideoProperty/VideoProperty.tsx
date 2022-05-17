@@ -1,12 +1,11 @@
 import { Accordion, AccordionDetails, AccordionSummary } from '@components/Accordion';
 import { useHandleProperty } from '@hooks/useHandleProperty';
-import { IVideoPropertyData, VideoPropertySourceType } from '@models/Properties/VideoPropertyData';
+import { IVideoPropertyData, VideoPropertySourceType } from '@models/PropertyData/VideoPropertyData';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { Button, FormControl, IconButton, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, styled, Typography } from '@mui/material';
 import React, { FunctionComponent } from 'react';
-import { Form } from 'react-bootstrap';
 import { TextInput } from '../../../Form/Input';
 import { IBasePropertyTemplateProps } from '../../DynamicCreateProperties.types';
 

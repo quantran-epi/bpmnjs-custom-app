@@ -49,20 +49,20 @@ export default class CustomRenderer extends BaseRenderer {
     canRender(element) {
 
         // only render tasks and events (ignore labels)
-        return isAny(element, ['custom:Web', 'custom:Click', 'custom:Input', 'custom:Sleep', 'custom:ExtractTextValue']) && !element.labelTarget;
+        return isAny(element, ['custom:Web', 'custom:Click', 'custom:Input', 'custom:Sleep', 'custom:ExtractTextValue', 'custom:RepeatProcess']) && !element.labelTarget;
     }
 
     drawShape(parentNode, element) {
-        const rect = drawRect(parentNode, element.width, element.height, TASK_BORDER_RADIUS, '#000');
-
         if (is(element, 'custom:Web')) {
+            const rect = drawRect(parentNode, element.width, element.height, TASK_BORDER_RADIUS, '#000');
+
             const iconWrapper = svgCreate("g");
             const icon = getSvgFromString(webElementSvg);
             svgAppend(iconWrapper, icon);
             svgAppend(parentNode, iconWrapper);
 
             svgAttr(iconWrapper, {
-                transform: `translate(0, ${element.height - 37})`
+                transform: `translate(0, ${element.height - 30})`
             });
 
             let semantic = getSemantic(element);
@@ -77,13 +77,14 @@ export default class CustomRenderer extends BaseRenderer {
         }
 
         if (is(element, 'custom:Click')) {
+            const rect = drawRect(parentNode, element.width, element.height, TASK_BORDER_RADIUS, '#000');
             const iconWrapper = svgCreate("g");
             const icon = getSvgFromString(clickElementSvg);
             svgAppend(iconWrapper, icon);
             svgAppend(parentNode, iconWrapper);
 
             svgAttr(iconWrapper, {
-                transform: `translate(0, ${element.height - 40})`
+                transform: `translate(0, ${element.height - 30})`
             });
 
             let semantic = getSemantic(element);
@@ -98,13 +99,14 @@ export default class CustomRenderer extends BaseRenderer {
         }
 
         if (is(element, 'custom:Input')) {
+            const rect = drawRect(parentNode, element.width, element.height, TASK_BORDER_RADIUS, '#000');
             const iconWrapper = svgCreate("g");
             const icon = getSvgFromString(inputElementSvg);
             svgAppend(iconWrapper, icon);
             svgAppend(parentNode, iconWrapper);
 
             svgAttr(iconWrapper, {
-                transform: `translate(0, ${element.height - 40})`
+                transform: `translate(2, ${element.height - 30})`
             });
 
             let semantic = getSemantic(element);
@@ -119,13 +121,14 @@ export default class CustomRenderer extends BaseRenderer {
         }
 
         if (is(element, 'custom:Sleep')) {
+            const rect = drawRect(parentNode, element.width, element.height, TASK_BORDER_RADIUS, '#000');
             const iconWrapper = svgCreate("g");
             const icon = getSvgFromString(sleepElementSvg);
             svgAppend(iconWrapper, icon);
             svgAppend(parentNode, iconWrapper);
 
             svgAttr(iconWrapper, {
-                transform: `translate(0, ${element.height - 40})`
+                transform: `translate(0, ${element.height - 30})`
             });
 
             let semantic = getSemantic(element);
@@ -140,13 +143,14 @@ export default class CustomRenderer extends BaseRenderer {
         }
 
         if (is(element, 'custom:ExtractTextValue')) {
+            const rect = drawRect(parentNode, element.width, element.height, TASK_BORDER_RADIUS, '#000');
             const iconWrapper = svgCreate("g");
             const icon = getSvgFromString(extractTextValueElementSvg);
             svgAppend(iconWrapper, icon);
             svgAppend(parentNode, iconWrapper);
 
             svgAttr(iconWrapper, {
-                transform: `translate(0, ${element.height - 40})`
+                transform: `translate(0, ${element.height - 30})`
             });
 
             let semantic = getSemantic(element);

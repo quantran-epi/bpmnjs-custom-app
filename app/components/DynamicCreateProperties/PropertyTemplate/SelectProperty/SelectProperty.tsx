@@ -88,8 +88,7 @@ export const SelectProperty: FunctionComponent<ISelectPropertyProps> = ({
                             value={_data.value}
                             label="Value"
                             onChange={_onValueChange}
-                            onBlur={_onValueSelectBlur}
-                        >
+                            onBlur={_onValueSelectBlur}>
                             {items.map(item => <MenuItem value={item.value}>{item.label}</MenuItem>)}
                         </Select>
                     </FormControl>

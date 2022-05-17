@@ -37,6 +37,7 @@ export const TextProperty: FunctionComponent<ITextPropertyProps> = ({
     }
 
     const _onValueTextBoxEnter = () => {
+        if (multiline) return;
         if (valueDirty) save();
     }
 

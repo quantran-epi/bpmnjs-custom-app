@@ -5,7 +5,7 @@ import { PropertyType } from '@constants';
 import { nanoid } from '@helpers/nanoid';
 import { useMenu } from '@hooks/useMenu';
 import { useProperties } from '@hooks/useProperties';
-import { IVideoPropertyData, VideoPropertySourceType } from '@models/Properties/VideoPropertyData';
+import { IVideoPropertyData, VideoPropertySourceType } from '@models/PropertyData/VideoPropertyData';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';

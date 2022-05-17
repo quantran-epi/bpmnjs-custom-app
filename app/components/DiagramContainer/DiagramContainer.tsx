@@ -19,8 +19,8 @@ export const DiagramContainer = () => {
     }, [modeler])
 
     const _handleLabelUpdated = (element) => {
-        dispatch(updateLabel({ nodeId: element.labelTarget.id, label: element.businessObject.name }));
-        dispatch(selectNode(element.labelTarget.id));
+        // dispatch(updateLabel({ nodeId: element.labelTarget.id, label: element.businessObject.name }));
+        // dispatch(selectNode(element.labelTarget.id));
     }
 
     const _handleOtherElementLabelUpdated = (element) => {
@@ -48,7 +48,7 @@ export const DiagramContainer = () => {
             _autoCreateName(e.context.shape);
         })
 
-        eventBus.on('shape.added', function (e) {debugger
+        eventBus.on('shape.added', function (e) {
             console.log('shape added', e);
             if (nodeTypeBlaclist.includes(e.element.type)) return;
             dispatch(addNode({
