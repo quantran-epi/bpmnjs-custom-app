@@ -20,12 +20,12 @@ export const CodeEditorProperty: FunctionComponent<ICodeEditorPropertyProps> = (
     onSave,
     onRemove,
     readonly = false,
-    autoExpand = false,
+    autoExpand = true,
     allowDelete = true
 }) => {
     const { data: _data, valueDirtyRef, keyDirtyRef, setKey, setValue, saveByRef, removeByRef } = useHandleProperty({ data, onRemove, onSave });
     const inputRef = useRef(null);
-    const [expanded, setExpanded] = React.useState<string | false>(false);
+    const [expanded, setExpanded] = React.useState<string | false>(autoExpand ? 'panel1' : false);
     const handleChange =
         (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
             setExpanded(isExpanded ? panel : false);

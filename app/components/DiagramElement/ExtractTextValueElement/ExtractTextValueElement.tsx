@@ -19,7 +19,7 @@ export const ExtractTextValueProperties: FunctionComponent<IExtractTextValueProp
     const { properties: _properties, saveProperty: _saveProperty, updateProperty: _updateProperty, removeProperty: _removeProperty } = useProperties({ node: data });
     const { handleExpandedChange, isExpanded } = useAccordion({
         keys: ['basic', 'valueMapping'],
-        activeKeys: ['basic']
+        activeKeys: ['valueMapping']
     })
     const _filterProperties = useMemo(() => {
         return _properties.filter(prop => !prop.dynamic)

@@ -7,6 +7,6 @@ interface IMultilineTextPropertyProps extends ITextPropertyProps {
 
 export const MultilineTextProperty: FunctionComponent<IMultilineTextPropertyProps> = (props) => {
     return (
-        <TextProperty {...props} multiline />
+        <TextProperty {...props} multiline autoExpand />
     )
 }

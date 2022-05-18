@@ -19,14 +19,14 @@ export const TextProperty: FunctionComponent<ITextPropertyProps> = ({
     onSave,
     onRemove,
     readonly = false,
-    autoExpand = false,
+    autoExpand = true,
     allowDelete = true,
     multiline = false,
     rows = 5,
     type = "text"
 }) => {
     const { data: _data, valueDirty, keyDirty, setKey, setValue, remove, save } = useHandleProperty({ data, onRemove, onSave });
-    const [expanded, setExpanded] = React.useState<string | false>(false);
+    const [expanded, setExpanded] = React.useState<string | false>(autoExpand ? 'panel1' : false);
     const handleChange =
         (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
             setExpanded(isExpanded ? panel : false);
