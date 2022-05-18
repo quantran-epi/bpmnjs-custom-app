@@ -1,4 +1,5 @@
 import { initProperties } from '@helpers/initProperty';
+import { IFlowNode } from '@models/FlowNode';
 import React, { useContext, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { AppContext } from '../../AppContext';
@@ -82,8 +83,10 @@ export const DiagramContainer = () => {
                 id: e.element.id,
                 typelLabel: PanelHeaderProvider.getTypeLabel(e.element, modeler),
                 type: e.element.type,
-                properties: []
-            }));
+                properties: [],
+                sourceRef: e.element.source.id,
+                targetRef: e.element.target.id
+            } as IFlowNode));
         })
 
         eventBus.on('connection.removed', function (e) {
