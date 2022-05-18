@@ -1,36 +1,21 @@
-# bpmn-js Modeler Example
+1. Build bpmn-js
 
-This example uses [bpmn-js](https://github.com/bpmn-io/bpmn-js) to implement a modeler for BPMN 2.0 process diagrams. It serves as the basis of the bpmn-js demo application available at [demo.bpmn.io](http://demo.bpmn.io).
+```
+cd bpmn-js
+npm install
+```
 
-## About
+2. Build diagram minimap
 
-This example is a node-style web application that builds a user interface around the bpmn-js BPMN 2.0 modeler.
+```
+cd diagram-js-minimap
+npm install
+npm run build
+```
 
-![demo application screenshot](https://raw.githubusercontent.com/bpmn-io/bpmn-js-examples/master/modeler/docs/screenshot.png "Screenshot of the example application")
-
-
-## Building
-
-You need a [NodeJS](http://nodejs.org) development stack with [npm](https://npmjs.org) installed to build the project.
-
-To install all project dependencies execute
+3. Run diagram modeler
 
 ```
 yarn install
+yarn run start
 ```
-
-Build the application (including [bpmn-js](https://github.com/bpmn-io/bpmn-js)) via
-
-```
-yarn run all
-```
-
-You may also spawn a development setup by executing
-
-```
-yarn run dev
-```
-
-Both tasks generate the distribution ready client-side modeler application into the `public` folder.
-
-Serve the application locally or via a web server (nginx, apache, embedded).
