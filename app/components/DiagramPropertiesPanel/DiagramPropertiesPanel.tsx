@@ -1,6 +1,7 @@
 import { ClickProperties } from '@components/DiagramElement/ClickElement/ClickElement';
 import { ExtractTextValueProperties } from '@components/DiagramElement/ExtractTextValueElement/ExtractTextValueElement';
 import { InputProperties } from '@components/DiagramElement/InputElement/InputElement';
+import { SequenceFlowProperties } from '@components/DiagramElement/SequenceFlowElement/SequenceFlowElement';
 import { SleepProperties } from '@components/DiagramElement/SleepElement/SleepElement';
 import { WebProperties } from '@components/DiagramElement/WebElement/WebProperties';
 import { ELEMENT_TYPES } from '@constants';
@@ -18,7 +19,7 @@ import './DiagramPropertiesPanel.scss';
 export const DiagramPropertiesPanel = () => {
     const _selectedNode = useSelector(selectedNode);
     const { modeler } = useContext(AppContext);
-   
+
     const _renderElementProperties = (node: INode) => {
         switch (node.type) {
             case ELEMENT_TYPES.WEB: return <WebProperties data={node} />
@@ -26,6 +27,7 @@ export const DiagramPropertiesPanel = () => {
             case ELEMENT_TYPES.INPUT: return <InputProperties data={node} />
             case ELEMENT_TYPES.SLEEP: return <SleepProperties data={node} />
             case ELEMENT_TYPES.EXTRACT_TEXT_VALUE: return <ExtractTextValueProperties data={node} />
+            case ELEMENT_TYPES.SEQUENCE_FLOW: return <SequenceFlowProperties data={node} />
         }
     }
 
@@ -35,7 +37,7 @@ export const DiagramPropertiesPanel = () => {
                 <Toolbar>
                     {_selectedNode ?
                         <Box>
-                            <Typography variant='h6'>{_selectedNode.typelLabel}</Typography>
+                            <Typography variant='h6'>{_selectedNode.typeLabel}</Typography>
                             <Typography>{_selectedNode.label}</Typography>
                         </Box> : "Please select an element"}
                 </Toolbar>

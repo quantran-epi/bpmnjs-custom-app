@@ -4,30 +4,39 @@
             "href": {
                 "type": "Text"
             }
-        }
+        },
+        "hasDynamicProperties": false
     },
     "click": {
         "properties": {
             "selector": {
                 "type": "MultilineText"
             }
-        }
+        },
+        "hasDynamicProperties": false
     },
     "input": {
         "properties": {
             "selector": {
                 "type": "MultilineText"
             }
-        }
+        },
+        "hasDynamicProperties": false
     },
     "sleep": {
         "properties": {
             "time": {
                 "type": "Number"
             }
-        }
+        },
+        "hasDynamicProperties": false
     },
     "extractTextValue": {
-        "properties": {}
+        "properties": {},
+        "hasDynamicProperties": false
+    },
+    "sequenceFlow": {
+        "properties": {},
+        "hasDynamicProperties": false
     }
 }

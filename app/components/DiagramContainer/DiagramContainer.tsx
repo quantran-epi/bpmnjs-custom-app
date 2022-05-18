@@ -55,7 +55,7 @@ export const DiagramContainer = () => {
             dispatch(addNode({
                 id: e.element.id,
                 label: e.element.id,
-                typelLabel: PanelHeaderProvider.getTypeLabel(e.element, modeler),
+                typeLabel: PanelHeaderProvider.getTypeLabel(e.element, modeler),
                 type: e.element.type,
                 properties: initProperties(e.element.id, e.element.type)
             }));
@@ -81,11 +81,11 @@ export const DiagramContainer = () => {
             console.log('connection created', e);
             dispatch(addNode({
                 id: e.element.id,
-                typelLabel: PanelHeaderProvider.getTypeLabel(e.element, modeler),
+                typeLabel: PanelHeaderProvider.getTypeLabel(e.element, modeler),
                 type: e.element.type,
-                properties: [],
+                properties: initProperties(e.element.id, e.element.type),
                 sourceRef: e.element.source.id,
-                targetRef: e.element.target.id
+                targetRef: e.element.target.id,
             } as IFlowNode));
         })
 
