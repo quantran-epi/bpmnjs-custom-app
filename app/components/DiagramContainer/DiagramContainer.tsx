@@ -3,7 +3,7 @@ import { IFlowNode } from '@models/FlowNode';
 import React, { useContext, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { AppContext } from '../../AppContext';
-import { ELEMENT_TYPES } from '../../constants';
+import { ElementType } from '../../constants';
 import { PanelHeaderProvider } from '../../features/PropertiesPanel/PropertiesPanelHeaderProvider';
 import { addNode, deselectNode, removeNodes, selectNode, updateLabel } from '../../features/PropertiesPanel/PropertiesPanelSlice';
 import { DiagramPropertiesPanel } from '../DiagramPropertiesPanel';
@@ -70,7 +70,7 @@ export const DiagramContainer = () => {
             console.log('selection.changed', e);
             if (e.newSelection.length === 0) dispatch(deselectNode());
             else {
-                let selectionNodeId = e.newSelection[0].type === ELEMENT_TYPES.LABEL ?
+                let selectionNodeId = e.newSelection[0].type === ElementType.LABEL ?
                     e.newSelection[0].labelTarget.id
                     : e.newSelection[0].id;
                 dispatch(selectNode(selectionNodeId));

@@ -1,10 +1,14 @@
 import { BasicProperties } from '@components/BasicProperties';
 import { DynamicCreateProperties } from '@components/DynamicCreateProperties';
+import { PropertyGroup } from '@components/PropertyGroup';
 import { PropertyList } from '@components/PropertyList';
 import { PropertyType } from '@constants';
 import { useAccordion } from '@hooks/useAccordion';
 import { useProperties } from '@hooks/useProperties';
+import { usePropertyGroup } from '@hooks/usePropertyGroup';
 import { INode } from '@models/Node';
+import { IPropertyGroup } from '@models/PropertyGroup';
+import { Stack } from '@mui/material';
 import React, { FunctionComponent, useMemo } from 'react';
 
 interface ISequenceFlowPropertiesProps {
@@ -15,29 +19,20 @@ export const SequenceFlowProperties: FunctionComponent<ISequenceFlowPropertiesPr
     data
 }) => {
     const { properties: _properties, saveProperty: _saveProperty, updateProperty: _updateProperty, removeProperty: _removeProperty } = useProperties({ node: data });
-    const { handleExpandedChange, isExpanded } = useAccordion({
-        keys: ['basic', 'dynamic'],
-        activeKeys: ['basic']
-    })
-    const _filterProperties = useMemo(() => {
-        return _properties.filter(prop => !prop.dynamic)
-    }, [_properties])
+    const { groups } = usePropertyGroup({ elementType: data.type });
 
-    return (
-        <React.Fragment>
-            {/* {_filterProperties.length > 0 && <BasicProperties
-                node={data}
-                expanded={isExpanded("basic")}
-                onExpanedChange={handleExpandedChange("basic")}>
-                <PropertyList properties={_filterProperties} onSave={_updateProperty} onRemove={_removeProperty} />
-            </BasicProperties>}
-            <DynamicCreateProperties
-                allowCreateTypes={[PropertyType.MultilineText, PropertyType.Text, PropertyType.CodeEditor]}
-                title="Dynamic Properties"
-                node={data}
-                expanded={isExpanded("dynamic")}
-                onExpanedChange={handleExpandedChange("dynamic")}
-            /> */}
-        </React.Fragment>
-    )
+    const { handleExpandedChange, isExpanded } = useAccordion({
+        activeKeys: [groups[0].key]
+    })
+
+    const _renderGroup = (group: IPropertyGroup): React.ReactNode => {
+        let properties = _properties.filter(prop => prop.group === group.key);
+        return <PropertyGroup data={group} onAddProperty={_saveProperty} expanded={isExpanded(group.key)} onExpanedChange={handleExpandedChange(group.key)}>
+            <PropertyList properties={properties} onSave={_updateProperty} onRemove={_removeProperty} />
+        </PropertyGroup>
+    }
+
+    return <Stack>
+        {groups.map(_renderGroup)}
+    </Stack>
 }

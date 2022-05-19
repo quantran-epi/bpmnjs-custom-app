@@ -1,45 +1,32 @@
 import { Accordion, AccordionDetails, AccordionSummary } from '@components/Accordion';
-import { PropertyList } from '@components/PropertyList';
-import template from '@config/property-template.json';
-import { PropertyType } from '@constants';
-import { nanoid } from '@helpers/nanoid';
-import { useMenu } from '@hooks/useMenu';
-import { useProperties } from '@hooks/useProperties';
-import { IVideoPropertyData, VideoPropertySourceType } from '@models/PropertyData/VideoPropertyData';
+import { IPropertyGroup } from '@models/PropertyGroup';
+import { ExpandLess, ExpandMore } from '@mui/icons-material';
+import { IconButton, Menu, MenuItem, Stack, Typography } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { IconButton, Menu, MenuItem, Stack } from '@mui/material';
-import Typography from '@mui/material/Typography';
-import React, { FunctionComponent, useMemo } from 'react';
-import { INode } from '../../models/Node';
-import { IProperty } from '../../models/Property';
+import React, { FunctionComponent } from 'react';
+import { useMenu } from '@hooks/useMenu';
+import { PropertyType } from '@constants';
+import { IProperty } from '@models/Property';
+import { nanoid } from '@helpers/nanoid';
+import { IVideoPropertyData, VideoPropertySourceType } from '@models/PropertyData/VideoPropertyData';
+import template from '@config/property-template.json';
 
-interface IDynamicCreatePropertiesProps {
-    node: INode;
+interface IPropertyGroupProps {
+    data: IPropertyGroup;
     expanded: boolean;
     onExpanedChange: (event: React.SyntheticEvent<Element, Event>, expanded: boolean) => void;
-    title?: string;
-    allowCreateTypes?: PropertyType[];
-    style?: React.CSSProperties;
-    className?: string;
+    children: React.ReactNode;
+    onAddProperty: (property: IProperty) => void;
 }
 
-export const DynamicCreateProperties: FunctionComponent<IDynamicCreatePropertiesProps> = ({
-    node,
+export const PropertyGroup: FunctionComponent<IPropertyGroupProps> = ({
+    data,
     expanded,
     onExpanedChange,
-    title = "Dynamic Properties",
-    allowCreateTypes = Object.values(PropertyType),
-    style,
-    className
+    children,
+    onAddProperty
 }) => {
     const { anchor, removeAnchor, setAnchor } = useMenu();
-    const { properties: _properties, saveProperty: _saveProperty, updateProperty: _updateProperty, removeProperty: _removeProperty } = useProperties({ node: node });
-
-    const _dynamicProperties = useMemo(() => {
-        return _properties.filter(prop => prop.dynamic);
-    }, [_properties])
 
     const _onAddTextProperty = () => {
         let newProperty: IProperty = {
@@ -48,10 +35,9 @@ export const DynamicCreateProperties: FunctionComponent<IDynamicCreateProperties
             value: "",
             valueType: PropertyType.Text,
             dynamic: true,
-            group: "dynamic"
+            group: data.key
         }
-        // _setProperties([..._properties, newProperty]);
-        _saveProperty(newProperty);
+        onAddProperty(newProperty);
         removeAnchor();
         if (!expanded) onExpanedChange(null, true);
     }
@@ -63,10 +49,9 @@ export const DynamicCreateProperties: FunctionComponent<IDynamicCreateProperties
             value: "",
             valueType: PropertyType.CodeEditor,
             dynamic: true,
-            group: "dynamic"
+            group: data.key
         }
-        // _setProperties([..._properties, newProperty]);
-        _saveProperty(newProperty);
+        onAddProperty(newProperty);
         removeAnchor();
         if (!expanded) onExpanedChange(null, true);
     }
@@ -81,10 +66,9 @@ export const DynamicCreateProperties: FunctionComponent<IDynamicCreateProperties
             },
             valueType: PropertyType.Video,
             dynamic: true,
-            group: "dynamic"
+            group: data.key
         }
-        // _setProperties([..._properties, newProperty]);
-        _saveProperty(newProperty);
+        onAddProperty(newProperty);
         removeAnchor();
         if (!expanded) onExpanedChange(null, true);
     }
@@ -96,10 +80,9 @@ export const DynamicCreateProperties: FunctionComponent<IDynamicCreateProperties
             value: "",
             valueType: PropertyType.MultilineText,
             dynamic: true,
-            group: "dynamic"
+            group: data.key
         }
-        // _setProperties([..._properties, newProperty]);
-        _saveProperty(newProperty);
+        onAddProperty(newProperty);
         removeAnchor();
         if (!expanded) onExpanedChange(null, true);
     }
@@ -111,21 +94,22 @@ export const DynamicCreateProperties: FunctionComponent<IDynamicCreateProperties
             value: "",
             valueType: PropertyType.Number,
             dynamic: true,
-            group: "dynamic"
+            group: data.key
         }
-        // _setProperties([..._properties, newProperty]);
-        _saveProperty(newProperty);
+        onAddProperty(newProperty);
         removeAnchor();
         if (!expanded) onExpanedChange(null, true);
     }
 
-    return <Accordion expanded={expanded} bottomSeparator className={className} style={style}>
+    return <Accordion expanded={expanded} onChange={onExpanedChange}>
         <AccordionSummary
-            expandButton={_properties.length > 0 && <Stack direction="row" spacing={2} alignItems="center">
-                {expanded ? <IconButton onClick={(e) => onExpanedChange(e, false)}><ExpandLessIcon /></IconButton> :
-                    <IconButton onClick={(e) => onExpanedChange(e, true)}><ExpandMoreIcon /></IconButton>}
+            expandButton={<Stack direction="row" spacing={2} alignItems="center">
+                {expanded ? <IconButton onClick={(e) => onExpanedChange(e, false)}><ExpandLess /></IconButton> :
+                    <IconButton onClick={(e) => onExpanedChange(e, true)}><ExpandMore /></IconButton>}
             </Stack>}
-            toolbar={<Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+            toolbar={data.creation.enabled && <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
                 <div>
                     <IconButton
                         id="basic-button"
@@ -146,21 +130,19 @@ export const DynamicCreateProperties: FunctionComponent<IDynamicCreateProperties
                         MenuListProps={{
                             'aria-labelledby': 'basic-button',
                         }}>
-                        {allowCreateTypes.includes(PropertyType.Text) && <MenuItem onClick={_onAddTextProperty}>Text</MenuItem>}
-                        {allowCreateTypes.includes(PropertyType.MultilineText) && <MenuItem onClick={_onAddMultilineTextProperty}>Multiline Text</MenuItem>}
-                        {allowCreateTypes.includes(PropertyType.CodeEditor) && <MenuItem onClick={_onAddCodeEditorProperty}>Code editor</MenuItem>}
-                        {allowCreateTypes.includes(PropertyType.Video) && <MenuItem onClick={_onAddVideoProperty}>Video</MenuItem>}
-                        {allowCreateTypes.includes(PropertyType.Number) && <MenuItem onClick={_onAddNumberProperty}>Number</MenuItem>}
+                        {data.creation.allowTypes.includes(PropertyType.Text) && <MenuItem onClick={_onAddTextProperty}>Text</MenuItem>}
+                        {data.creation.allowTypes.includes(PropertyType.MultilineText) && <MenuItem onClick={_onAddMultilineTextProperty}>Multiline Text</MenuItem>}
+                        {data.creation.allowTypes.includes(PropertyType.CodeEditor) && <MenuItem onClick={_onAddCodeEditorProperty}>Code editor</MenuItem>}
+                        {data.creation.allowTypes.includes(PropertyType.Video) && <MenuItem onClick={_onAddVideoProperty}>Video</MenuItem>}
+                        {data.creation.allowTypes.includes(PropertyType.Number) && <MenuItem onClick={_onAddNumberProperty}>Number</MenuItem>}
                     </Menu>
                 </div>
             </Stack>}
-            onClick={(e) => onExpanedChange(e, !expanded)}
-            aria-controls="panel2a-content"
-            id="panel2a-header">
-            <Typography style={{ fontWeight: expanded ? "bold" : "normal" }}>{title}</Typography>
+        >
+            <Typography style={{ fontWeight: expanded ? "bold" : "normal" }}>{data.title}</Typography>
         </AccordionSummary>
         <AccordionDetails>
-            {_dynamicProperties.length > 0 ? <PropertyList properties={_dynamicProperties} onSave={_updateProperty} onRemove={_removeProperty} /> : "No properties found."}
+            {children}
         </AccordionDetails>
-    </Accordion >
+    </Accordion>
 }

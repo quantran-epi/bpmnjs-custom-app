@@ -6,12 +6,10 @@ interface IUseAccorion {
 }
 
 interface IUseAccordionProps {
-    keys: string[];
     activeKeys: string[];
 }
 
 export const useAccordion = ({
-    keys,
     activeKeys
 }: IUseAccordionProps): IUseAccorion => {
     const [expanded, setExpanded] = React.useState<string[]>(activeKeys);

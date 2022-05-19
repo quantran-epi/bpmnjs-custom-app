@@ -1,0 +1,105 @@
+{
+    "custom:Web": {
+        "properties": {
+            "href": {
+                "type": "Text",
+                "group": "basic"
+            }
+        },
+        "groups": {
+            "basic": {
+                "key": "basic",
+                "title": "Basic Properties",
+                "creation": {
+                    "enabled": false,
+                    "allowTypes": []
+                }
+            }
+        }
+    },
+    "custom:Click": {
+        "properties": {
+            "selector": {
+                "type": "MultilineText",
+                "group": "basic"
+            }
+        },
+        "groups": {
+            "basic": {
+                "key": "basic",
+                "title": "Basic Properties",
+                "creation": {
+                    "enabled": false,
+                    "allowTypes": []
+                }
+            }
+        }
+    },
+    "custom:Input": {
+        "properties": {
+            "selector": {
+                "type": "MultilineText",
+                "group": "basic"
+            }
+        },
+        "groups": {
+            "basic": {
+                "key": "basic",
+                "title": "Basic Properties",
+                "creation": {
+                    "enabled": false,
+                    "allowTypes": []
+                }
+            }
+        }
+    },
+    "custom:Sleep": {
+        "properties": {
+            "time": {
+                "type": "Number",
+                "group": "basic"
+            }
+        },
+        "groups": {
+            "basic": {
+                "key": "basic",
+                "title": "Basic Properties",
+                "creation": {
+                    "enabled": false,
+                    "allowTypes": []
+                }
+            }
+        }
+    },
+    "custom:ExtractTextValue": {
+        "properties": {},
+        "groups": {
+            "dynamic": {
+                "title": "Value Extractor",
+                "creation": {
+                    "enabled": true,
+                    "allowTypes": [
+                        "MultilineText"
+                    ]
+                }
+            }
+        }
+    },
+    "bpmn:SequenceFlow": {
+        "properties": {
+            "test": {
+                "type": "Text",
+                "group": "basic"
+            }
+        },
+        "groups": {
+            "basic": {
+                "title": "Basic Properties",
+                "creation": {
+                    "enabled": false,
+                    "allowTypes": []
+                }
+            }
+        }
+    }
+}

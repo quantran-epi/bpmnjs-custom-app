@@ -6,4 +6,5 @@ export type IProperty<T = any> = {
     key: string;
     value: T;
     dynamic: boolean;
+    group: string;
 }

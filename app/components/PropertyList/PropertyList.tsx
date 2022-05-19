@@ -4,7 +4,7 @@ import { TextProperty } from '@components/DynamicCreateProperties/PropertyTempla
 import { VideoProperty } from '@components/DynamicCreateProperties/PropertyTemplate/VideoProperty';
 import { PropertyType } from '@constants';
 import { IProperty } from '@models/Property';
-import { Stack } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import React, { FunctionComponent } from 'react';
 
 interface IPropertyListProps {
@@ -32,7 +32,7 @@ export const PropertyList: FunctionComponent<IPropertyListProps> = ({
 
     return (
         <Stack className="app-property-list">
-            {properties.map(_renderProperty)}
+            {properties.length > 0 ? properties.map(_renderProperty) : <Typography>No properties found</Typography>}
         </Stack>
     )
 }

@@ -4,7 +4,7 @@ import { InputProperties } from '@components/DiagramElement/InputElement/InputEl
 import { SequenceFlowProperties } from '@components/DiagramElement/SequenceFlowElement/SequenceFlowElement';
 import { SleepProperties } from '@components/DiagramElement/SleepElement/SleepElement';
 import { WebProperties } from '@components/DiagramElement/WebElement/WebProperties';
-import { ELEMENT_TYPES } from '@constants';
+import { ElementType } from '@constants';
 import { INode } from '@models/Node';
 import { AppBar, Paper, Toolbar } from '@mui/material';
 import Typography from '@mui/material/Typography';
@@ -22,12 +22,12 @@ export const DiagramPropertiesPanel = () => {
 
     const _renderElementProperties = (node: INode) => {
         switch (node.type) {
-            case ELEMENT_TYPES.WEB: return <WebProperties data={node} />
-            case ELEMENT_TYPES.CLICK: return <ClickProperties data={node} />
-            case ELEMENT_TYPES.INPUT: return <InputProperties data={node} />
-            case ELEMENT_TYPES.SLEEP: return <SleepProperties data={node} />
-            case ELEMENT_TYPES.EXTRACT_TEXT_VALUE: return <ExtractTextValueProperties data={node} />
-            case ELEMENT_TYPES.SEQUENCE_FLOW: return <SequenceFlowProperties data={node} />
+            case ElementType.WEB: return <WebProperties data={node} />
+            case ElementType.CLICK: return <ClickProperties data={node} />
+            case ElementType.INPUT: return <InputProperties data={node} />
+            case ElementType.SLEEP: return <SleepProperties data={node} />
+            case ElementType.EXTRACT_TEXT_VALUE: return <ExtractTextValueProperties data={node} />
+            case ElementType.SEQUENCE_FLOW: return <SequenceFlowProperties data={node} />
         }
     }
 
@@ -60,9 +60,9 @@ export const DiagramPropertiesPanel = () => {
 //     const [_destination, _setDestination] = useState<string>("");
 //     const { modeler } = useContext(AppContext);
 //     const _destinationTypesBlacklist = [
-//         ELEMENT_TYPES.SEQUENCE_FLOW,
-//         ELEMENT_TYPES.START_EVENT];
-//     const _sourceTypesBlacklist = [ELEMENT_TYPES.SEQUENCE_FLOW, ELEMENT_TYPES.END_EVENT];
+//         ElementType.SEQUENCE_FLOW,
+//         ElementType.START_EVENT];
+//     const _sourceTypesBlacklist = [ElementType.SEQUENCE_FLOW, ElementType.END_EVENT];
 //     const _filteredNodes = useMemo<INode[]>(() => {
 //         return _nodes.filter(e => e.id !== node.id && !_destinationTypesBlacklist.includes(e.type));
 //     }, [node, _nodes, _destinationTypesBlacklist])
