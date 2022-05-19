@@ -18,11 +18,12 @@ interface ISequenceFlowPropertiesProps {
 export const SequenceFlowProperties: FunctionComponent<ISequenceFlowPropertiesProps> = ({
     data
 }) => {
+    debugger
     const { properties: _properties, saveProperty: _saveProperty, updateProperty: _updateProperty, removeProperty: _removeProperty } = useProperties({ node: data });
     const { groups } = usePropertyGroup({ elementType: data.type });
 
     const { handleExpandedChange, isExpanded } = useAccordion({
-        activeKeys: [groups[0].key]
+        activeKeys: [groups[0]?.key]
     })
 
     const _renderGroup = (group: IPropertyGroup): React.ReactNode => {

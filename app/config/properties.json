@@ -92,14 +92,6 @@
                 "group": "basic"
             }
         },
-        "groups": {
-            "basic": {
-                "title": "Basic Properties",
-                "creation": {
-                    "enabled": false,
-                    "allowTypes": []
-                }
-            }
-        }
+        "groups": {}
     }
 }

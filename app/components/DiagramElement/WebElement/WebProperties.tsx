@@ -19,7 +19,7 @@ export const WebProperties: FunctionComponent<IWebPropertiesProps> = ({
     const { groups } = usePropertyGroup({ elementType: data.type });
 
     const { handleExpandedChange, isExpanded } = useAccordion({
-        activeKeys: [groups[0].key]
+        activeKeys: [groups[0]?.key]
     })
 
     const _renderGroup = (group: IPropertyGroup): React.ReactNode => {
