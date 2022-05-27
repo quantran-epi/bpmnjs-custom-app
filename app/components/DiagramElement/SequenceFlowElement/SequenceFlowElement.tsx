@@ -18,7 +18,6 @@ interface ISequenceFlowPropertiesProps {
 export const SequenceFlowProperties: FunctionComponent<ISequenceFlowPropertiesProps> = ({
     data
 }) => {
-    debugger
     const { properties: _properties, saveProperty: _saveProperty, updateProperty: _updateProperty, removeProperty: _removeProperty } = useProperties({ node: data });
     const { groups } = usePropertyGroup({ elementType: data.type });
 
@@ -28,7 +27,7 @@ export const SequenceFlowProperties: FunctionComponent<ISequenceFlowPropertiesPr
 
     const _renderGroup = (group: IPropertyGroup): React.ReactNode => {
         let properties = _properties.filter(prop => prop.group === group.key);
-        return <PropertyGroup data={group} onAddProperty={_saveProperty} expanded={isExpanded(group.key)} onExpanedChange={handleExpandedChange(group.key)}>
+        return <PropertyGroup key={group.key} data={group} onAddProperty={_saveProperty} expanded={isExpanded(group.key)} onExpanedChange={handleExpandedChange(group.key)}>
             <PropertyList properties={properties} onSave={_updateProperty} onRemove={_removeProperty} />
         </PropertyGroup>
     }

@@ -7,4 +7,5 @@ export interface INode {
     label?: string
     type: ElementType;
     properties: IProperty[];
+    parentId: string;
 }

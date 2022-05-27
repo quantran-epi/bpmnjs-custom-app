@@ -66,7 +66,7 @@ export const TextProperty: FunctionComponent<ITextPropertyProps> = ({
             </AccordionSummary>
             <AccordionDetails style={{ borderLeft: "3px solid rgba(0,0,0,0.8)", marginLeft: 15 }}>
                 <Stack gap={2} marginTop={0.5}>
-                    <TextInput
+                    {data.dynamic && <TextInput
                         size="small"
                         label="Key"
                         autoFocus
@@ -76,8 +76,7 @@ export const TextProperty: FunctionComponent<ITextPropertyProps> = ({
                         value={_data.key}
                         onChangeText={setKey}
                         onBlur={_onKeyTextBoxBlur}
-                        onEnter={_onKeyTextBoxEnter}
-                        disabled={!_data.dynamic} />
+                        onEnter={_onKeyTextBoxEnter} />}
                     <TextInput
                         multiline={multiline}
                         rows={rows}

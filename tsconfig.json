@@ -30,6 +30,9 @@
             ],
             "@helpers/*": [
                 "./app/helpers/*"
+            ],
+            "@server/*": [
+                "./server/*"
             ]
         }
     }

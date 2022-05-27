@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { AppContext } from '../AppContext';
 import { DiagramContainer } from '../components/DiagramContainer';
 import init from '../init';
+import { INode } from '@models/Node';
 
 export const DiagramPage = () => {
     const { setModeler } = useContext(AppContext);
@@ -22,9 +23,27 @@ export const DiagramPage = () => {
         a.click();
     }
 
+    const _convertNodes = (nodes: INode[]) => {
+        function getChildren(nodeId: string) {
+            let children = nodes.filter(e => e.parentId === nodeId);
+            if (children.length === 0) return [];
+
+            return children.map(child => ({
+                ...child,
+                children: getChildren(child.id)
+            }))
+        }
+
+        let process = {
+            id: "Process_1",
+            children: getChildren("Process_1")
+        };
+        debugger
+    }
+
     const _onDownloadDiagramProperties = () => {
-        console.log("node json", JSON.stringify(_nodes));
-        downloadFile(JSON.stringify(_nodes), "diagram-properties.json", 'text/plain');
+        console.log("node json", JSON.stringify(_convertNodes(_nodes)));
+        downloadFile(JSON.stringify(_convertNodes(_nodes)), "diagram-properties.json", 'text/plain');
     }
 
     return (

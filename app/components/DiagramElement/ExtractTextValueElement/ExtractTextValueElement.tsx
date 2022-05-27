@@ -1,17 +1,12 @@
-import { BasicProperties } from '@components/BasicProperties';
-import { DynamicCreateProperties } from '@components/DynamicCreateProperties';
 import { PropertyGroup } from '@components/PropertyGroup';
 import { PropertyList } from '@components/PropertyList';
-import { PropertyType } from '@constants';
 import { useAccordion } from '@hooks/useAccordion';
 import { useProperties } from '@hooks/useProperties';
 import { usePropertyGroup } from '@hooks/usePropertyGroup';
 import { INode } from '@models/Node';
-import { IProperty } from '@models/Property';
 import { IPropertyGroup } from '@models/PropertyGroup';
-import { useMenu } from '@mui/base';
 import { Stack } from '@mui/material';
-import React, { FunctionComponent, useMemo, useState } from 'react';
+import React, { FunctionComponent } from 'react';
 
 interface IExtractTextValuePropertiesProps {
     data: INode;

@@ -1,4 +1,5 @@
 import { ClickProperties } from '@components/DiagramElement/ClickElement/ClickElement';
+import { ExpandedSubProcessProperties } from '@components/DiagramElement/ExpandedSubProcessElement/ExpandedSubProcessElement';
 import { ExtractTextValueProperties } from '@components/DiagramElement/ExtractTextValueElement/ExtractTextValueElement';
 import { InputProperties } from '@components/DiagramElement/InputElement/InputElement';
 import { SequenceFlowProperties } from '@components/DiagramElement/SequenceFlowElement/SequenceFlowElement';
@@ -6,18 +7,18 @@ import { SleepProperties } from '@components/DiagramElement/SleepElement/SleepEl
 import { WebProperties } from '@components/DiagramElement/WebElement/WebProperties';
 import { ElementType } from '@constants';
 import { INode } from '@models/Node';
-import { AppBar, Paper, Toolbar } from '@mui/material';
+import { AppBar, Button, Paper, Toolbar } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { Box } from '@mui/system';
 import React, { useContext } from 'react';
-// import { Accordion, Button, Card, Form, InputGroup } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { AppContext } from '../../AppContext';
-import { selectedNode } from '../../features/PropertiesPanel/PropertiesPanelSlice';
+import { nodesSelector, selectedNode } from '../../features/PropertiesPanel/PropertiesPanelSlice';
 import './DiagramPropertiesPanel.scss';
 
 export const DiagramPropertiesPanel = () => {
     const _selectedNode = useSelector(selectedNode);
+    const _nodes = useSelector(nodesSelector);
     const { modeler } = useContext(AppContext);
 
     const _renderElementProperties = (node: INode) => {
@@ -28,6 +29,7 @@ export const DiagramPropertiesPanel = () => {
             case ElementType.SLEEP: return <SleepProperties data={node} />
             case ElementType.EXTRACT_TEXT_VALUE: return <ExtractTextValueProperties data={node} />
             case ElementType.SEQUENCE_FLOW: return <SequenceFlowProperties data={node} />
+            case ElementType.SUB_PROCESS: return <ExpandedSubProcessProperties data={node} />
         }
     }
 
@@ -44,10 +46,7 @@ export const DiagramPropertiesPanel = () => {
             </AppBar>
             {_selectedNode && <Box style={{ padding: 0 }}>
                 {_renderElementProperties(_selectedNode)}
-                {/* <DynamicCreateProperties
-                    expanded={expanded === accordionKeys.additionalProperties}
-                    onExpanedChange={handleChange(accordionKeys.additionalProperties)}
-                    node={_selectedNode} /> */}
+                {/* <Button onClick={() => console.log(_nodes)}>Parse</Button> */}
             </Box >}
         </Paper >
     )

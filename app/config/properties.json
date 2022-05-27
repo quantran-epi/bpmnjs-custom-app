@@ -75,6 +75,7 @@
         "properties": {},
         "groups": {
             "dynamic": {
+                "key": "dynamic",
                 "title": "Value Extractor",
                 "creation": {
                     "enabled": true,
@@ -85,13 +86,37 @@
             }
         }
     },
-    "bpmn:SequenceFlow": {
+    "bpmn:SubProcess": {
         "properties": {
-            "test": {
-                "type": "Text",
+            "loop": {
+                "type": "Number",
                 "group": "basic"
             }
         },
-        "groups": {}
+        "groups": {
+            "basic": {
+                "key": "basic",
+                "title": "Basic Properties",
+                "creation": {
+                    "enabled": false,
+                    "allowTypes": []
+                }
+            }
+        }
+    },
+    "bpmn:SequenceFlow": {
+        "properties": {},
+        "groups": {
+            "basic": {
+                "key": "basic",
+                "title": "Basic Properties",
+                "creation": {
+                    "enabled": true,
+                    "allowTypes": [
+                        "Video"
+                    ]
+                }
+            }
+        }
     }
 }

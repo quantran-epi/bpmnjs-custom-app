@@ -89,7 +89,7 @@ export const CodeEditorProperty: FunctionComponent<ICodeEditorPropertyProps> = (
             </AccordionSummary>
             <AccordionDetails style={{ borderLeft: "3px solid rgba(0,0,0,0.8)", marginLeft: 15 }}>
                 <Stack gap={2} marginTop={0.5}>
-                    <TextInput
+                    {_data.dynamic && <TextInput
                         size="small"
                         label="Key"
                         autoFocus
@@ -99,8 +99,8 @@ export const CodeEditorProperty: FunctionComponent<ICodeEditorPropertyProps> = (
                         value={_data.key}
                         onChangeText={setKey}
                         onBlur={_onKeyTextBoxBlur}
-                        onEnter={_onKeyTextBoxEnter}
-                        disabled={!_data.dynamic} />
+                        onEnter={_onKeyTextBoxEnter} />}
+
                     {/* <TextInput
                         ref={inputRef}
                         size="small"

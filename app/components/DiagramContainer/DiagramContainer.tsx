@@ -57,7 +57,8 @@ export const DiagramContainer = () => {
                 label: e.element.id,
                 typeLabel: PanelHeaderProvider.getTypeLabel(e.element, modeler),
                 type: e.element.type,
-                properties: initProperties(e.element.id, e.element.type)
+                properties: initProperties(e.element.id, e.element.type),
+                parentId: e.element.parent?.id
             }));
         })
 
@@ -86,6 +87,7 @@ export const DiagramContainer = () => {
                 properties: initProperties(e.element.id, e.element.type),
                 sourceRef: e.element.source.id,
                 targetRef: e.element.target.id,
+                parentId: e.element.parent?.id
             } as IFlowNode));
         })
 

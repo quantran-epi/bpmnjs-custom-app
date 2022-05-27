@@ -1,11 +1,12 @@
 import { Accordion, AccordionDetails, AccordionSummary } from '@components/Accordion';
 import { useHandleProperty } from '@hooks/useHandleProperty';
+import { useUploadFile } from '@hooks/useUploadFile';
 import { IVideoPropertyData, VideoPropertySourceType } from '@models/PropertyData/VideoPropertyData';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { Button, FormControl, IconButton, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, styled, Typography } from '@mui/material';
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useRef } from 'react';
 import { TextInput } from '../../../Form/Input';
 import { IBasePropertyTemplateProps } from '../../DynamicCreateProperties.types';
 
@@ -26,6 +27,10 @@ export const VideoProperty: FunctionComponent<IVideoPropertyProps> = ({
         (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
             setExpanded(isExpanded ? panel : false);
         };
+    const { upload } = useUploadFile({
+        dest: "http://localhost:5000/upload/"
+    })
+    const filePickerRef = useRef<HTMLInputElement>(null);
 
     const _onValueTextBoxBlur = () => {
         if (valueDirty) save();
@@ -54,15 +59,23 @@ export const VideoProperty: FunctionComponent<IVideoPropertyProps> = ({
         if (valueDirty) save();
     }
 
-    const _onVideoSourceUrlInputChanged = (value: string) => {
-        setValue({
-            ...data.value,
-            data: value
-        })
-    }
+    // const _onVideoSourceUrlInputChanged = (value: string) => {
+    //     setValue({
+    //         ...data.value,
+    //         data: value
+    //     })
+    // }
 
     const _onVideoSourceUrlInputBlur = () => {
         if (valueDirty) save();
+    }
+
+    const _onFileUploadChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (!event.target.files || event.target.files.length === 0) return;
+        let fileToUpload = event.target.files[0];
+        upload("uploaded_file", fileToUpload, fileToUpload.name.concat('.svg'))
+            .then(res => console.log('upload success', res))
+            .catch(err => console.log('err', err));
     }
 
     return <React.Fragment>
@@ -82,7 +95,7 @@ export const VideoProperty: FunctionComponent<IVideoPropertyProps> = ({
             </AccordionSummary>
             <AccordionDetails style={{ borderLeft: "3px solid rgba(0,0,0,0.8)", marginLeft: 15 }}>
                 <Stack gap={2} marginTop={0.5}>
-                    <TextInput
+                    {_data.dynamic && <TextInput
                         size="small"
                         label="Key"
                         autoFocus
@@ -92,9 +105,8 @@ export const VideoProperty: FunctionComponent<IVideoPropertyProps> = ({
                         value={_data.key}
                         onChangeText={setKey}
                         onBlur={_onKeyTextBoxBlur}
-                        onEnter={_onKeyTextBoxEnter}
-                        disabled={!_data.dynamic} />
-                    <FormControl fullWidth>
+                        onEnter={_onKeyTextBoxEnter} />}
+                    {/* <FormControl fullWidth>
                         <InputLabel id="demo-simple-select-label">Source Type</InputLabel>
                         <Select
                             size="small"
@@ -108,8 +120,8 @@ export const VideoProperty: FunctionComponent<IVideoPropertyProps> = ({
                                 <MenuItem value={VideoPropertySourceType[key]}>{key}</MenuItem>
                             )}
                         </Select>
-                    </FormControl>
-                    {_data.value.sourceType === VideoPropertySourceType.Url &&
+                    </FormControl> */}
+                    {/* {_data.value.sourceType === VideoPropertySourceType.Url &&
                         <TextInput
                             size="small"
                             label="Url"
@@ -119,10 +131,10 @@ export const VideoProperty: FunctionComponent<IVideoPropertyProps> = ({
                             aria-describedby="basic-addon1"
                             value={_data.value.data}
                             onChangeText={_onVideoSourceUrlInputChanged}
-                            onBlur={_onVideoSourceUrlInputBlur} />}
+                            onBlur={_onVideoSourceUrlInputBlur} />} */}
                     {_data.value.sourceType === VideoPropertySourceType.Local &&
                         <label htmlFor="contained-button-file">
-                            <Input accept="image/*,video/quicktime,.pdf" id="contained-button-file" multiple type="file" />
+                            <Input ref={filePickerRef} onChange={_onFileUploadChanged} accept="image/*" id="contained-button-file" multiple type="file" />
                             <Button size="small" variant="contained" component="span">
                                 Choose video
                             </Button>
