@@ -5,8 +5,8 @@ import BpmnModeler from 'bpmn-js/lib/Modeler';
 import diagramXML from '../resources/newDiagram.bpmn';
 import customModules from './custom/index';
 import customPackage from '../resources/custom.json';
-import ConnectorsExtensionModule from 'bpmn-js-connectors-extension';
-import 'bpmn-js-connectors-extension/dist/connectors-extension.css';
+// import ConnectorsExtensionModule from 'bpmn-js-connectors-extension';
+// import 'bpmn-js-connectors-extension/dist/connectors-extension.css';
 import 'diagram-js-minimap/assets/diagram-js-minimap.css';
 import TemplateIconRendererModule from '@bpmn-io/element-templates-icons-renderer';
 
