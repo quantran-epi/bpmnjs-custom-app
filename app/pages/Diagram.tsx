@@ -57,7 +57,7 @@ export const DiagramPage = () => {
         console.log("node json", JSON.stringify(_convertNodes(_nodes)));
         let exportedData = _convertNodes(_nodes);
         if (!exportedData)
-            alert('Each process should have 1 StartEvent and 1 EndEvent');
+            alert('Each process must have 1 StartEvent and 1 EndEvent');
         else
             downloadFile(JSON.stringify(exportedData), "diagram-properties.json", 'text/plain');
     }
