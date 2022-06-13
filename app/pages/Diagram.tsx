@@ -39,6 +39,7 @@ export const DiagramPage = () => {
             children: getChildren("Process_1")
         };
         debugger
+        return process;
     }
 
     const _onDownloadDiagramProperties = () => {
