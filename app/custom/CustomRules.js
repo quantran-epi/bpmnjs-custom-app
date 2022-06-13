@@ -1,7 +1,6 @@
 import inherits from 'inherits';
 
 import RuleProvider from 'diagram-js/lib/features/rules/RuleProvider';
-import { is } from 'bpmn-js/lib/util/ModelUtil';
 
 
 /**
@@ -23,18 +22,36 @@ CustomRules.$inject = ['eventBus'];
 
 
 CustomRules.prototype.init = function () {
-    this.addRule('connection.create', function (context) {
-        debugger
-        var source = context.source,
-            target = context.target;
-        if (is(target, 'custom:Web')) return false;
-    });
 
-    this.addRule('connection.reconnect', function (context) {
-        var connection = context.connection,
-            source = context.source,
+    // there exist a number of modeling actions
+    // that are identified by a unique ID. We
+    // can hook into each one of them and make sure
+    // they are only allowed if we say so
+    debugger
+    this.addRule('shape.added', function (context) {
+
+        var shape = context.shape,
             target = context.target;
 
-        if (is(target, 'custom:Web')) return false;
+        // we check for a custom vendor:allowDrop attribute
+        // to be present on the BPMN 2.0 xml of the target
+        // node
+        //
+        // we could practically check for other things too,
+        // such as incoming / outgoing connections, element
+        // types, ...
+        var shapeBo = shape.businessObject,
+            targetBo = target.businessObject;
+
+        var allowDrop = targetBo.get('vendor:allowDrop');
+
+        if (!allowDrop || !shapeBo.$instanceOf(allowDrop)) {
+            return false;
+        }
+
+        // not returning anything means other rule
+        // providers can still do their work
+        //
+        // this allows us to reuse the existing BPMN rules
     });
 };

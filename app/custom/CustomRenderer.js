@@ -42,14 +42,23 @@ export default class CustomRenderer extends BaseRenderer {
     constructor(eventBus, bpmnRenderer, textRenderer) {
         super(eventBus, HIGH_PRIORITY);
 
-        this.bpmnRenderer = bpmnRenderer;
+        this.bpmnRenderer = bpmnRenderer; console.log('bpmn renderer', bpmnRenderer);
         this.textRenderer = textRenderer;
     }
 
     canRender(element) {
 
         // only render tasks and events (ignore labels)
-        return isAny(element, ['custom:Web', 'custom:Click', 'custom:Input', 'custom:Sleep', 'custom:ExtractTextValue', 'custom:RepeatProcess']) && !element.labelTarget;
+        return isAny(element,
+            [
+                'custom:Web',
+                'custom:Click',
+                'custom:Input',
+                'custom:Sleep',
+                'custom:ExtractTextValue',
+                'custom:RepeatProcess',
+                'bpmn:SubProcess'
+            ]) && !element.labelTarget;
     }
 
     drawShape(parentNode, element) {
@@ -162,6 +171,10 @@ export default class CustomRenderer extends BaseRenderer {
             })
 
             return rect;
+        }
+
+        if (is(element, 'bpmn:SubProcess')) {
+            this.bpmnRenderer.handlers['bpmn:SubProcess'](parentNode, element);
         }
     }
 

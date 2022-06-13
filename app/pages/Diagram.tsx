@@ -62,6 +62,10 @@ export const DiagramPage = () => {
             downloadFile(JSON.stringify(exportedData), "diagram-properties.json", 'text/plain');
     }
 
+    const _onDownloadDiagramPropertiesFlat = () => {
+        downloadFile(JSON.stringify(_nodes), "diagram-properties-flat.json", 'text/plain');
+    }
+
     return (
         <React.Fragment>
             <div className="content" id="js-drop-zone">
@@ -97,6 +101,11 @@ export const DiagramPage = () => {
                 <li>
                     <a href="#" id='js-download-properties' title="download Diagram properties" onClick={_onDownloadDiagramProperties}>
                         Diagram properties
+                    </a>
+                </li>
+                <li>
+                    <a href="#" id='js-download-properties-flat' title="download Diagram properties" onClick={_onDownloadDiagramPropertiesFlat}>
+                        Diagram properties flat
                     </a>
                 </li>
                 <li>

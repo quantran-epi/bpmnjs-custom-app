@@ -11,13 +11,13 @@ export default {
         // 'customContextPad',
         // 'customPalette',
         'customRenderer',
-        // 'customRules'
+        'customRules'
     ],
     labelEditingProvider: ['type', LabelEditingProvider],
     paletteProvider: ['type', PalettesProvider],
     contextPadProvider: ['type', ContextPadProvider],
     // customContextPad: ['type', CustomContextPad],
     // customPalette: ['type', CustomPalette],
-    // customRules: ['type', CustomRules],
+    customRules: ['type', CustomRules],
     customRenderer: ['type', CustomRenderer],
 };
