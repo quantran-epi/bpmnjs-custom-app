@@ -1,10 +1,11 @@
 import { nodesSelector } from '../features/PropertiesPanel/PropertiesPanelSlice';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { AppContext } from '../AppContext';
 import { DiagramContainer } from '../components/DiagramContainer';
 import init from '../init';
 import { INode } from '@models/Node';
+import { ElementType } from '@constants';
 
 export const DiagramPage = () => {
     const { setModeler } = useContext(AppContext);
@@ -23,10 +24,19 @@ export const DiagramPage = () => {
         a.click();
     }
 
+    const _isValid = (nodes: INode[]): boolean => {
+        return nodes.filter(node => node.type === ElementType.START_EVENT)?.length === 1
+            && nodes.filter(node => node.type === ElementType.END_EVENT)?.length === 1;
+    }
+
     const _convertNodes = (nodes: INode[]) => {
+        let _valid = true;
         function getChildren(nodeId: string) {
             let children = nodes.filter(e => e.parentId === nodeId);
             if (children.length === 0) return [];
+
+            // validate
+            _valid = _isValid(children);
 
             return children.map(child => ({
                 ...child,
@@ -38,13 +48,18 @@ export const DiagramPage = () => {
             id: "Process_1",
             children: getChildren("Process_1")
         };
-        debugger
+
+        if (!_valid) return;
         return process;
     }
 
     const _onDownloadDiagramProperties = () => {
         console.log("node json", JSON.stringify(_convertNodes(_nodes)));
-        downloadFile(JSON.stringify(_convertNodes(_nodes)), "diagram-properties.json", 'text/plain');
+        let exportedData = _convertNodes(_nodes);
+        if (!exportedData)
+            alert('Each process should have 1 StartEvent and 1 EndEvent');
+        else
+            downloadFile(JSON.stringify(exportedData), "diagram-properties.json", 'text/plain');
     }
 
     return (
