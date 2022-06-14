@@ -24,7 +24,7 @@ export const WebProperties: FunctionComponent<IWebPropertiesProps> = ({
 
     const _renderGroup = (group: IPropertyGroup): React.ReactNode => {
         let properties = _properties.filter(prop => prop.group === group.key);
-        return <PropertyGroup data={group} onAddProperty={_saveProperty} expanded={isExpanded(group.key)} onExpanedChange={handleExpandedChange(group.key)}>
+        return <PropertyGroup key={group.key} data={group} onAddProperty={_saveProperty} expanded={isExpanded(group.key)} onExpanedChange={handleExpandedChange(group.key)}>
             <PropertyList properties={properties} onSave={_updateProperty} onRemove={_removeProperty} />
         </PropertyGroup>
     }

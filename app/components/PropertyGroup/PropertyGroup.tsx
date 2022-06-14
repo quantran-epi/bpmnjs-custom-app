@@ -109,7 +109,7 @@ export const PropertyGroup: FunctionComponent<IPropertyGroupProps> = ({
             </Stack>}
             aria-controls="panel1a-content"
             id="panel1a-header"
-            toolbar={data.creation.enabled && <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
+            toolbar={data.creation.enabled ? <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
                 <div>
                     <IconButton
                         id="basic-button"
@@ -137,7 +137,7 @@ export const PropertyGroup: FunctionComponent<IPropertyGroupProps> = ({
                         {data.creation.allowTypes.includes(PropertyType.Number) && <MenuItem onClick={_onAddNumberProperty}>Number</MenuItem>}
                     </Menu>
                 </div>
-            </Stack>}
+            </Stack> : undefined}
         >
             <Typography style={{ fontWeight: expanded ? "bold" : "normal" }}>{data.title}</Typography>
         </AccordionSummary>

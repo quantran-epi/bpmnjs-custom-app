@@ -46,22 +46,22 @@ export default function BpmnRules(eventBus) {
 
 inherits(BpmnRules, RuleProvider);
 
-BpmnRules.$inject = [ 'eventBus' ];
+BpmnRules.$inject = ['eventBus'];
 
-BpmnRules.prototype.init = function() {
+BpmnRules.prototype.init = function () {
 
-  this.addRule('connection.start', function(context) {
+  this.addRule('connection.start', function (context) {
     var source = context.source;
 
     return canStartConnection(source);
   });
 
-  this.addRule('connection.create', function(context) {
+  this.addRule('connection.create', function (context) {
     var source = context.source,
-        target = context.target,
-        hints = context.hints || {},
-        targetParent = hints.targetParent,
-        targetAttach = hints.targetAttach;
+      target = context.target,
+      hints = context.hints || {},
+      targetParent = hints.targetParent,
+      targetAttach = hints.targetAttach;
 
     // don't allow incoming connections on
     // newly created boundary events
@@ -87,39 +87,39 @@ BpmnRules.prototype.init = function() {
     }
   });
 
-  this.addRule('connection.reconnect', function(context) {
+  this.addRule('connection.reconnect', function (context) {
 
     var connection = context.connection,
-        source = context.source,
-        target = context.target;
+      source = context.source,
+      target = context.target;
 
     return canConnect(source, target, connection);
   });
 
-  this.addRule('connection.updateWaypoints', function(context) {
+  this.addRule('connection.updateWaypoints', function (context) {
     return {
       type: context.connection.type
     };
   });
 
-  this.addRule('shape.resize', function(context) {
+  this.addRule('shape.resize', function (context) {
 
     var shape = context.shape,
-        newBounds = context.newBounds;
+      newBounds = context.newBounds;
 
     return canResize(shape, newBounds);
   });
 
-  this.addRule('elements.create', function(context) {
+  this.addRule('elements.create', function (context) {
     var elements = context.elements,
-        position = context.position,
-        target = context.target;
+      position = context.position,
+      target = context.target;
 
     if (isConnection(target) && !canInsert(elements, target, position)) {
       return false;
     }
 
-    return every(elements, function(element) {
+    return every(elements, function (element) {
       if (isConnection(element)) {
         return canConnect(element.source, element.target, element);
       }
@@ -132,19 +132,19 @@ BpmnRules.prototype.init = function() {
     });
   });
 
-  this.addRule('elements.move', function(context) {
+  this.addRule('elements.move', function (context) {
 
     var target = context.target,
-        shapes = context.shapes,
-        position = context.position;
+      shapes = context.shapes,
+      position = context.position;
 
     return canAttach(shapes, target, null, position) ||
-           canReplace(shapes, target, position) ||
-           canMove(shapes, target, position) ||
-           canInsert(shapes, target, position);
+      canReplace(shapes, target, position) ||
+      canMove(shapes, target, position) ||
+      canInsert(shapes, target, position);
   });
 
-  this.addRule('shape.create', function(context) {
+  this.addRule('shape.create', function (context) {
     return canCreate(
       context.shape,
       context.target,
@@ -153,7 +153,7 @@ BpmnRules.prototype.init = function() {
     );
   });
 
-  this.addRule('shape.attach', function(context) {
+  this.addRule('shape.attach', function (context) {
 
     return canAttach(
       context.shape,
@@ -163,9 +163,9 @@ BpmnRules.prototype.init = function() {
     );
   });
 
-  this.addRule('element.copy', function(context) {
+  this.addRule('element.copy', function (context) {
     var element = context.element,
-        elements = context.elements;
+      elements = context.elements;
 
     return canCopy(elements, element);
   });
@@ -257,7 +257,7 @@ function isGroup(element) {
 
 function isCompensationBoundary(element) {
   return is(element, 'bpmn:BoundaryEvent') &&
-         hasEventDefinition(element, 'bpmn:CompensateEventDefinition');
+    hasEventDefinition(element, 'bpmn:CompensateEventDefinition');
 }
 
 function isForCompensation(e) {
@@ -266,7 +266,7 @@ function isForCompensation(e) {
 
 function isSameOrganization(a, b) {
   var parentA = getOrganizationalParent(a),
-      parentB = getOrganizationalParent(b);
+    parentB = getOrganizationalParent(b);
 
   return parentA === parentB;
 }
@@ -318,7 +318,7 @@ function getScopeParent(element) {
 
 function isSameScope(a, b) {
   var scopeParentA = getScopeParent(a),
-      scopeParentB = getScopeParent(b);
+    scopeParentB = getScopeParent(b);
 
   return scopeParentA === scopeParentB;
 }
@@ -326,7 +326,7 @@ function isSameScope(a, b) {
 function hasEventDefinition(element, eventDefinition) {
   var bo = getBusinessObject(element);
 
-  return !!find(bo.eventDefinitions || [], function(definition) {
+  return !!find(bo.eventDefinitions || [], function (definition) {
     return is(definition, eventDefinition);
   });
 }
@@ -334,7 +334,7 @@ function hasEventDefinition(element, eventDefinition) {
 function hasEventDefinitionOrNone(element, eventDefinition) {
   var bo = getBusinessObject(element);
 
-  return (bo.eventDefinitions || []).every(function(definition) {
+  return (bo.eventDefinitions || []).every(function (definition) {
     return is(definition, eventDefinition);
   });
 }
@@ -467,7 +467,7 @@ function canDrop(element, target, position) {
   }
 
   // allow moving DataInput / DataOutput within its original container only
-  if (isAny(element, [ 'bpmn:DataInput', 'bpmn:DataOutput' ])) {
+  if (isAny(element, ['bpmn:DataInput', 'bpmn:DataOutput'])) {
 
     if (element.parent) {
       return target === element.parent;
@@ -491,12 +491,12 @@ function canDrop(element, target, position) {
       return isExpanded(target);
     }
 
-    return isAny(target, [ 'bpmn:Participant', 'bpmn:Lane' ]);
+    return isAny(target, ['bpmn:Participant', 'bpmn:Lane']);
   }
 
   // disallow dropping data store reference if there is no process to append to
   if (is(element, 'bpmn:DataStoreReference') && is(target, 'bpmn:Collaboration')) {
-    return some(getBusinessObject(target).get('participants'), function(participant) {
+    return some(getBusinessObject(target).get('participants'), function (participant) {
       return !!participant.get('processRef');
     });
   }
@@ -505,13 +505,13 @@ function canDrop(element, target, position) {
   // rendered and moved to top (Process or Collaboration level)
   //
   // artifacts may be placed wherever, too
-  if (isAny(element, [ 'bpmn:Artifact', 'bpmn:DataAssociation', 'bpmn:DataStoreReference' ])) {
+  if (isAny(element, ['bpmn:Artifact', 'bpmn:DataAssociation', 'bpmn:DataStoreReference'])) {
     return isAny(target, [
       'bpmn:Collaboration',
       'bpmn:Lane',
       'bpmn:Participant',
       'bpmn:Process',
-      'bpmn:SubProcess' ]);
+      'bpmn:SubProcess']);
   }
 
   if (is(element, 'bpmn:MessageFlow')) {
@@ -572,7 +572,7 @@ function hasCommonBoundaryIntermediateEventDefinition(element) {
 }
 
 function hasOneOfEventDefinitions(element, eventDefinitions) {
-  return eventDefinitions.some(function(definition) {
+  return eventDefinitions.some(function (definition) {
     return hasEventDefinition(element, definition);
   });
 }
@@ -580,7 +580,7 @@ function hasOneOfEventDefinitions(element, eventDefinitions) {
 function isReceiveTaskAfterEventBasedGateway(element) {
   return (
     is(element, 'bpmn:ReceiveTask') &&
-    find(element.incoming, function(incoming) {
+    find(element.incoming, function (incoming) {
       return is(incoming.source, 'bpmn:EventBasedGateway');
     })
   );
@@ -590,7 +590,7 @@ function isReceiveTaskAfterEventBasedGateway(element) {
 function canAttach(elements, target, source, position) {
 
   if (!Array.isArray(elements)) {
-    elements = [ elements ];
+    elements = [elements];
   }
 
   // only (re-)attach one element at a time
@@ -663,13 +663,13 @@ function canReplace(elements, target, position) {
     replacements: []
   };
 
-  forEach(elements, function(element) {
+  forEach(elements, function (element) {
 
     if (!isEventSubProcess(target)) {
 
       if (is(element, 'bpmn:StartEvent') &&
-          element.type !== 'label' &&
-          canDrop(element, target)) {
+        element.type !== 'label' &&
+        canDrop(element, target)) {
 
         // replace a non-interrupting start event by a blank interrupting start event
         // when the target is not an event sub process
@@ -683,8 +683,8 @@ function canReplace(elements, target, position) {
         // replace an error/escalation/compensate start event by a blank interrupting start event
         // when the target is not an event sub process
         if (hasErrorEventDefinition(element) ||
-            hasEscalationEventDefinition(element) ||
-            hasCompensateEventDefinition(element)) {
+          hasEscalationEventDefinition(element) ||
+          hasCompensateEventDefinition(element)) {
           canExecute.replacements.push({
             oldElementId: element.id,
             newElementType: 'bpmn:StartEvent'
@@ -700,7 +700,7 @@ function canReplace(elements, target, position) {
             'bpmn:SignalEventDefinition',
             'bpmn:ConditionalEventDefinition'
           ]) &&
-            is(target, 'bpmn:SubProcess')) {
+          is(target, 'bpmn:SubProcess')) {
           canExecute.replacements.push({
             oldElementId: element.id,
             newElementType: 'bpmn:StartEvent'
@@ -711,7 +711,7 @@ function canReplace(elements, target, position) {
 
     if (!is(target, 'bpmn:Transaction')) {
       if (hasEventDefinition(element, 'bpmn:CancelEventDefinition') &&
-          element.type !== 'label') {
+        element.type !== 'label') {
 
         if (is(element, 'bpmn:EndEvent') && canDrop(element, target)) {
           canExecute.replacements.push({
@@ -745,7 +745,7 @@ function canMove(elements, target) {
     return true;
   }
 
-  return elements.every(function(element) {
+  return elements.every(function (element) {
     return canDrop(element, target);
   });
 }
@@ -808,7 +808,7 @@ function canResize(shape, newBounds) {
 function isOneTextAnnotation(source, target) {
 
   var sourceTextAnnotation = isTextAnnotation(source),
-      targetTextAnnotation = isTextAnnotation(target);
+    targetTextAnnotation = isTextAnnotation(target);
 
   return (
     (sourceTextAnnotation || targetTextAnnotation) &&
@@ -871,21 +871,21 @@ function canConnectSequenceFlow(source, target) {
   }
 
   return isSequenceFlowSource(source) &&
-         isSequenceFlowTarget(target) &&
-         isSameScope(source, target) &&
-         !(is(source, 'bpmn:EventBasedGateway') && !isEventBasedTarget(target));
+    isSequenceFlowTarget(target) &&
+    isSameScope(source, target) &&
+    !(is(source, 'bpmn:EventBasedGateway') && !isEventBasedTarget(target));
 }
 
 
 function canConnectDataAssociation(source, target) {
 
-  if (isAny(source, [ 'bpmn:DataObjectReference', 'bpmn:DataStoreReference' ]) &&
-      isAny(target, [ 'bpmn:Activity', 'bpmn:ThrowEvent' ])) {
+  if (isAny(source, ['bpmn:DataObjectReference', 'bpmn:DataStoreReference']) &&
+    isAny(target, ['bpmn:Activity', 'bpmn:ThrowEvent'])) {
     return { type: 'bpmn:DataInputAssociation' };
   }
 
-  if (isAny(target, [ 'bpmn:DataObjectReference', 'bpmn:DataStoreReference' ]) &&
-      isAny(source, [ 'bpmn:Activity', 'bpmn:CatchEvent' ])) {
+  if (isAny(target, ['bpmn:DataObjectReference', 'bpmn:DataStoreReference']) &&
+    isAny(source, ['bpmn:Activity', 'bpmn:CatchEvent'])) {
     return { type: 'bpmn:DataOutputAssociation' };
   }
 
@@ -907,7 +907,7 @@ function canInsert(shape, flow, position) {
   }
 
   if (flow.source === shape ||
-      flow.target === shape) {
+    flow.target === shape) {
     return false;
   }
 
@@ -918,7 +918,7 @@ function canInsert(shape, flow, position) {
   // about connection rules (yet)
 
   return (
-    isAny(flow, [ 'bpmn:SequenceFlow', 'bpmn:MessageFlow' ]) &&
+    isAny(flow, ['bpmn:SequenceFlow', 'bpmn:MessageFlow']) &&
     !isLabel(flow) &&
     is(shape, 'bpmn:FlowNode') &&
     !is(shape, 'bpmn:BoundaryEvent') &&

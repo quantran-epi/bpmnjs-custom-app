@@ -22,32 +22,41 @@ CustomRules.$inject = ['eventBus'];
 
 
 CustomRules.prototype.init = function () {
-
     // there exist a number of modeling actions
     // that are identified by a unique ID. We
     // can hook into each one of them and make sure
     // they are only allowed if we say so
-    debugger
-    this.addRule('shape.added', function (context) {
+    // this._eventBus.on('commandStack.connection.create.postExecuted', function (context) {
+    //     return false;
+    // })
+    this.addRule('connection.create', function (context) {
+        console.log('connection create', context);
 
-        var shape = context.shape,
+        let source = context.source,
             target = context.target;
-
-        // we check for a custom vendor:allowDrop attribute
-        // to be present on the BPMN 2.0 xml of the target
-        // node
-        //
-        // we could practically check for other things too,
-        // such as incoming / outgoing connections, element
-        // types, ...
-        var shapeBo = shape.businessObject,
-            targetBo = target.businessObject;
-
-        var allowDrop = targetBo.get('vendor:allowDrop');
-
-        if (!allowDrop || !shapeBo.$instanceOf(allowDrop)) {
-            return false;
+        if (target.outgoing.length > 0) {
+            if (target.outgoing.some(connection => connection.target?.id === source.id))
+                return false;
         }
+
+        // var shape = context.shape,
+        //     target = context.target;
+
+        // // we check for a custom vendor:allowDrop attribute
+        // // to be present on the BPMN 2.0 xml of the target
+        // // node
+        // //
+        // // we could practically check for other things too,
+        // // such as incoming / outgoing connections, element
+        // // types, ...
+        // var shapeBo = shape.businessObject,
+        //     targetBo = target.businessObject;
+
+        // var allowDrop = targetBo.get('vendor:allowDrop');
+
+        // if (!allowDrop || !shapeBo.$instanceOf(allowDrop)) {
+        //     return false;
+        // }
 
         // not returning anything means other rule
         // providers can still do their work

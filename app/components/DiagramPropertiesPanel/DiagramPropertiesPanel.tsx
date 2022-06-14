@@ -46,7 +46,12 @@ export const DiagramPropertiesPanel = () => {
             </AppBar>
             {_selectedNode && <Box style={{ padding: 0 }}>
                 {_renderElementProperties(_selectedNode)}
-                {/* <Button onClick={() => console.log(_nodes)}>Parse</Button> */}
+                {/* <Button onClick={(event) => {
+                    let elementFactory = modeler.get('elementFactory');
+                    let create = modeler.get('create');
+                    const shape = elementFactory.createShape({ type: 'custom:Web' });
+                    create.start(event, shape);
+                }}>Parse</Button> */}
             </Box >}
         </Paper >
     )
