@@ -31,7 +31,7 @@ import { sleepElementSvg } from '@components/DiagramElement/SleepElement/icon';
 import { extractTextValueElementSvg } from '@components/DiagramElement/ExtractTextValueElement/icon';
 
 const HIGH_PRIORITY = 1500,
-    TASK_BORDER_RADIUS = 2;
+    TASK_BORDER_RADIUS = 10;
 
 function getSvgFromString(xml_string) {
     return new DOMParser().parseFromString(xml_string, 'application/xml').documentElement;

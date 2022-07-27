@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { AppContext } from '../../AppContext';
 import { ElementType } from '../../constants';
 import { PanelHeaderProvider } from '../../features/PropertiesPanel/PropertiesPanelHeaderProvider';
-import { addNode, deselectNode, removeNodes, selectNode, updateLabel } from '../../features/PropertiesPanel/PropertiesPanelSlice';
+import { addNextCursor, addNode, addPreviousCursor, deselectNode, removeNodes, selectNode, updateLabel } from '../../features/PropertiesPanel/PropertiesPanelSlice';
 import { DiagramPropertiesPanel } from '../DiagramPropertiesPanel';
 import './DiagramContainer.scss';
 
@@ -58,7 +58,9 @@ export const DiagramContainer = () => {
                 typeLabel: PanelHeaderProvider.getTypeLabel(e.element, modeler),
                 type: e.element.type,
                 properties: initProperties(e.element.id, e.element.type),
-                parentId: e.element.parent?.id
+                parentId: e.element.parent?.id,
+                next: [],
+                previous: []
             }));
         })
 
@@ -80,7 +82,7 @@ export const DiagramContainer = () => {
 
         eventBus.on('connection.added', function (e) {
             console.log('connection created', e);
-            dispatch(addNode({
+            let flowNode = {
                 id: e.element.id,
                 typeLabel: PanelHeaderProvider.getTypeLabel(e.element, modeler),
                 type: e.element.type,
@@ -88,7 +90,20 @@ export const DiagramContainer = () => {
                 sourceRef: e.element.source.id,
                 targetRef: e.element.target.id,
                 parentId: e.element.parent?.id
-            } as IFlowNode));
+            } as IFlowNode
+            dispatch(addNode(flowNode));
+            dispatch(addNextCursor({
+                nodeId: flowNode.sourceRef, cursor: {
+                    flow: flowNode,
+                    nodeId: flowNode.targetRef
+                }
+            }))
+            dispatch(addPreviousCursor({
+                nodeId: flowNode.targetRef, cursor: {
+                    flow: flowNode,
+                    nodeId: flowNode.sourceRef
+                }
+            }))
         })
 
         eventBus.on('connection.removed', function (e) {
@@ -104,6 +119,7 @@ export const DiagramContainer = () => {
                 {/* <div className="properties-panel-parent" id="js-properties-panel"></div> */}
                 <DiagramPropertiesPanel />
             </div>
+            {/* <ElementModalCollection /> */}
         </div>
     )
 }

@@ -1,8 +1,9 @@
 import { RootState } from './../../store';
 import { IProperty } from './../../models/Property';
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { INode } from '../../models/Node'
+import { ICursor, INode } from '../../models/Node'
 import { useSelector } from 'react-redux';
+import { IFlowNode } from '@models/FlowNode';
 
 export interface PropertiesPanelState {
     nodes: INode[];
@@ -63,6 +64,42 @@ export const PropertiesPanelSlice = createSlice({
             if (!property) return;
             property.key = action.payload.property.key;
             property.value = action.payload.property.value;
+        },
+        addNextCursor: (state, action: PayloadAction<{ nodeId: string, cursor: ICursor }>) => {
+            state.nodes = state.nodes.map(node => {
+                if (node.id !== action.payload.nodeId) return node;
+                return {
+                    ...node,
+                    next: [...node.next, action.payload.cursor]
+                }
+            })
+        },
+        addPreviousCursor: (state, action: PayloadAction<{ nodeId: string, cursor: ICursor }>) => {
+            state.nodes = state.nodes.map(node => {
+                if (node.id !== action.payload.nodeId) return node;
+                return {
+                    ...node,
+                    previous: [...node.previous, action.payload.cursor]
+                }
+            })
+        },
+        removeNextCursor: (state, action: PayloadAction<{ nodeId: string, cursor: ICursor }>) => {
+            state.nodes = state.nodes.map(node => {
+                if (node.id !== action.payload.nodeId) return node;
+                return {
+                    ...node,
+                    next: node.next.filter(cursor => cursor.flow.id !== action.payload.cursor.flow.id)
+                }
+            })
+        },
+        removePreviousCursor: (state, action: PayloadAction<{ nodeId: string, cursor: ICursor }>) => {
+            state.nodes = state.nodes.map(node => {
+                if (node.id !== action.payload.nodeId) return node;
+                return {
+                    ...node,
+                    previous: node.previous.filter(cursor => cursor.flow.id !== action.payload.cursor.flow.id)
+                }
+            })
         }
     },
 })
@@ -78,7 +115,11 @@ export const {
     addProperties,
     addProperty,
     removeProperties,
-    updateProperty
+    updateProperty,
+    addNextCursor,
+    addPreviousCursor,
+    removeNextCursor,
+    removePreviousCursor
 } = PropertiesPanelSlice.actions
 
 export default PropertiesPanelSlice.reducer
