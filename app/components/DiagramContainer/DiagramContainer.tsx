@@ -1,11 +1,11 @@
 import { initProperties } from '@helpers/initProperty';
 import { IFlowNode } from '@models/FlowNode';
 import React, { useContext, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AppContext } from '../../AppContext';
 import { ElementType } from '../../constants';
 import { PanelHeaderProvider } from '../../features/PropertiesPanel/PropertiesPanelHeaderProvider';
-import { addNextCursor, addNode, addPreviousCursor, deselectNode, removeNodes, selectNode, updateLabel } from '../../features/PropertiesPanel/PropertiesPanelSlice';
+import { addNextCursor, addNode, addPreviousCursor, deselectNode, nodesSelector, removeNextCursor, removeNodes, removePreviousCursor, selectNode, updateLabel } from '../../features/PropertiesPanel/PropertiesPanelSlice';
 import { DiagramPropertiesPanel } from '../DiagramPropertiesPanel';
 import './DiagramContainer.scss';
 
@@ -13,6 +13,7 @@ export const DiagramContainer = () => {
     const dispatch = useDispatch();
     const { modeler } = useContext(AppContext);
     const nodeTypeBlaclist = ["label"];
+    const _nodes = useSelector(nodesSelector);
 
     useEffect(() => {
         if (!modeler) return;
@@ -107,8 +108,17 @@ export const DiagramContainer = () => {
         })
 
         eventBus.on('connection.removed', function (e) {
+            debugger
             console.log('connection removed', e);
             dispatch(removeNodes(e.element.id));
+            dispatch(removePreviousCursor({
+                nodeId: e.element.target.id,
+                flowId: e.element.id
+            }))
+            dispatch(removeNextCursor({
+                nodeId: e.element.source.id,
+                flowId: e.element.id
+            }))
         })
     }
 

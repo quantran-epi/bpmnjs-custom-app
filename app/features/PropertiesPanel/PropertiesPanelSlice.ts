@@ -83,21 +83,21 @@ export const PropertiesPanelSlice = createSlice({
                 }
             })
         },
-        removeNextCursor: (state, action: PayloadAction<{ nodeId: string, cursor: ICursor }>) => {
+        removeNextCursor: (state, action: PayloadAction<{ nodeId: string, flowId: string }>) => {
             state.nodes = state.nodes.map(node => {
                 if (node.id !== action.payload.nodeId) return node;
                 return {
                     ...node,
-                    next: node.next.filter(cursor => cursor.flow.id !== action.payload.cursor.flow.id)
+                    next: node.next.filter(cursor => cursor.flow.id !== action.payload.flowId)
                 }
             })
         },
-        removePreviousCursor: (state, action: PayloadAction<{ nodeId: string, cursor: ICursor }>) => {
+        removePreviousCursor: (state, action: PayloadAction<{ nodeId: string, flowId: string }>) => {
             state.nodes = state.nodes.map(node => {
                 if (node.id !== action.payload.nodeId) return node;
                 return {
                     ...node,
-                    previous: node.previous.filter(cursor => cursor.flow.id !== action.payload.cursor.flow.id)
+                    previous: node.previous.filter(cursor => cursor.flow.id !== action.payload.flowId)
                 }
             })
         }
