@@ -2,11 +2,16 @@ import { INode } from "@models/Node";
 import { ExecutableNode } from "../Models/ExecutableNode";
 
 export class ClickHandler extends ExecutableNode {
-    constructor(data: INode, previous: INode[], next: INode[]) {
-        super(data, previous, next);
+    constructor(data: INode) {
+        super(data);
     }
 
-    public run(): void {
-        console.log('click ', this._data);
+    public async run(): Promise<void> {
+        return new Promise((res, rej) => {
+            setTimeout(() => {
+                console.log('click ', this._data, new Date().toUTCString());
+                res();
+            }, 2000)
+        })
     }
 }

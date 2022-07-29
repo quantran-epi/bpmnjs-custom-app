@@ -95,13 +95,13 @@ export const DiagramContainer = () => {
             dispatch(addNode(flowNode));
             dispatch(addNextCursor({
                 nodeId: flowNode.sourceRef, cursor: {
-                    flow: flowNode,
+                    flowId: flowNode.id,
                     nodeId: flowNode.targetRef
                 }
             }))
             dispatch(addPreviousCursor({
                 nodeId: flowNode.targetRef, cursor: {
-                    flow: flowNode,
+                    flowId: flowNode.id,
                     nodeId: flowNode.sourceRef
                 }
             }))

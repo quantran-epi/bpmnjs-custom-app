@@ -31,9 +31,12 @@
             "@helpers/*": [
                 "./app/helpers/*"
             ],
+            "@features/*": [
+                "./app/features/*"
+            ],
             "@server/*": [
                 "./server/*"
-            ]
+            ],
         }
     }
 }

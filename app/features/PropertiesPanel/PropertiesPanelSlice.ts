@@ -4,6 +4,7 @@ import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { ICursor, INode } from '../../models/Node'
 import { useSelector } from 'react-redux';
 import { IFlowNode } from '@models/FlowNode';
+import { ElementType } from '@constants';
 
 export interface PropertiesPanelState {
     nodes: INode[];
@@ -88,7 +89,7 @@ export const PropertiesPanelSlice = createSlice({
                 if (node.id !== action.payload.nodeId) return node;
                 return {
                     ...node,
-                    next: node.next.filter(cursor => cursor.flow.id !== action.payload.flowId)
+                    next: node.next.filter(cursor => cursor.flowId !== action.payload.flowId)
                 }
             })
         },
@@ -97,7 +98,7 @@ export const PropertiesPanelSlice = createSlice({
                 if (node.id !== action.payload.nodeId) return node;
                 return {
                     ...node,
-                    previous: node.previous.filter(cursor => cursor.flow.id !== action.payload.flowId)
+                    previous: node.previous.filter(cursor => cursor.flowId !== action.payload.flowId)
                 }
             })
         }

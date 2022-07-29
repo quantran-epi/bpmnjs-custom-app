@@ -5,7 +5,7 @@ import { InputProperties } from '@components/DiagramElement/InputElement/InputEl
 import { SequenceFlowProperties } from '@components/DiagramElement/SequenceFlowElement/SequenceFlowElement';
 import { SleepProperties } from '@components/DiagramElement/SleepElement/SleepElement';
 import { WebProperties } from '@components/DiagramElement/WebElement/WebProperties';
-import { TaskRunner } from '@components/TaskRunner/TaskRunner';
+import { TaskRunnerArea } from '@components/TaskRunner/TaskRunner';
 import { ElementType } from '@constants';
 import { INode } from '@models/Node';
 import { AppBar, Button, Paper, Toolbar } from '@mui/material';
@@ -55,7 +55,7 @@ export const DiagramPropertiesPanel = () => {
                 }}>Parse</Button> */}
             </Box >}
 
-            <TaskRunner />
+            <TaskRunnerArea />
         </Paper >
     )
 }

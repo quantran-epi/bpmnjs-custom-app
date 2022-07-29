@@ -1,10 +1,9 @@
 import { ElementType } from "@constants";
-import { IFlowNode } from "./FlowNode";
 import { IProperty } from "./Property";
 
 export interface ICursor {
     nodeId: string;
-    flow: IFlowNode;
+    flowId: string;
 }
 
 export interface INode {
