@@ -1,4 +1,4 @@
-import { TaskRunner } from '@helpers/TaskRunner';
+import { ProcessRunner } from '@helpers/ProcessRunner';
 import { Button } from '@mui/material';
 import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
@@ -14,7 +14,7 @@ export const TaskRunnerArea = () => {
     }
 
     const _loadFlow = async () => {
-        let runner = new TaskRunner(_nodes);
+        let runner = new ProcessRunner(_nodes, { id: 'Process_1', properties: [] });
         await runner.run();
     }
 
